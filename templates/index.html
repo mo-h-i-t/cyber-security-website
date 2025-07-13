@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cyber_secur</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    
+</head>
+<body>
+
+    <section class="hero">
+        <div class="container">
+            <div class="typewriter">
+                <h1></h1>
+            
+            </div>
+            <p>Hello Friend, The website made only for your help.The website made to check any Website or App ,its Right or Worng . </p>
+            <a href="#features" class="btn">Explore More</a>
+            <a href="home.html" class="btn" style="background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color);">NEXT</a>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 40px; color: var(--secondary-color);">Our Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <h3> To Useing</h3>
+                    <p>Ceacking.... <br> ↬ Website <br> ↬ App <br> ↬ photo <br>↬ video</p>
+                </div>
+                <div class="feature">
+                    <h3>Advanced Technology</h3>
+                    <p></p>.</p>
+                </div>
+                <div class="feature">
+                    <h3>Responsive Development</h3>
+                    <p>The useing languges  <Br> ↬ Python Progrmaing <br/> 
+                       ↬ Javascript <br>↬ CSS <BR>↬ HTML 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container">
+            <p>© 2025 Checking Website.</p>
+        </div>
+    </footer>
+    <script>
+        
+      // / Array of texts to cycle through
+    const texts = [
+        "Welcome to cyber security website  ",
+        "Know the website to Right or Worng",
+        "It's to made By Mohit Singh"
+    ];
+
+    let count = 0;
+    let index = 0;
+    let currentText = '';
+    let letter = '';
+
+    (function type() {
+        if (count === texts.length) {
+            count = 0;
+        }
+    
+        currentText = texts[count];
+        letter = currentText.slice(0, ++index);
+    
+        document.querySelector('.typewriter h1').textContent = letter;
+    
+        if (letter.length === currentText.length) {
+            count++;
+            index = 0;
+            setTimeout(type, 2000); // Pause before typing next text
+        } else {
+            setTimeout(type, 100); // Typing speed
+        }
+    }());
+
+    </script>
+
+    
+    
+</body>
+</html>
