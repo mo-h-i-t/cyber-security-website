@@ -10,13 +10,15 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
+    
     
 }
 
@@ -28,7 +30,7 @@ body {
     align-items: center;
     text-align: center;
     padding: 0 20px;
-    background: linear-gradient(135deg, #b0acac 10%, #272626 90%);
+    background: linear-gradient(135deg, #b0acac 50%, #272626 50%);
 }
 
 .container {
