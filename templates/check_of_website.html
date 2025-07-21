@@ -5,35 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Website Status Checker</title>
   <link rel="stylesheet" href="../static/check-of-website.css">
-  
 </head>
 <body>
-  <h1>Website Status Checker</h1>
-  <input type="text" id="urlInput" placeholder="Enter website URL (e.g. https://example.com)" />
-  <button onclick="checkWebsite()">⏳ Checking...❗</button>
-  <div id="result"></div>
-  <a href="home.html" class="back" > back<<<</a>
+  <div class="container">
+    <h1>Website Status Checker</h1>
+    <div class="input-group">
+      <input type="text" id="urlInput" placeholder="Enter website URL (e.g. https://example.com)" />
+    </div>
+    <button onclick="checkWebsite()">Check Website Status</button>
+    <div id="result"></div>
+    <a href="home.html" class="back">← Back to Home</a>
+  </div>
 
   <script>
     async function checkWebsite() {
-      const url = document.getElementById('urlInput').value;
+      const url = document.getElementById('urlInput').value.trim();
       const result = document.getElementById('result');
       
-      if (!url.startsWith('http')) {
-        result.innerHTML = "❗ Please enter a full URL starting with http:// or https://";
+      if (!url) {
+        result.innerHTML = "❗ Please enter a website URL";
+        return;
+      }
+      
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        result.innerHTML = "❗ Please include http:// or https://";
         return;
       }
 
       result.innerHTML = "⏳ Checking...";
-
+      
       try {
-        const response = await fetch(url, { mode: 'no-cors' });
-
-        result.innerHTML = "✅ Website appears to be online!";
+        // Using a proxy to avoid CORS issues
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+        
+        if (response.ok) {
+          result.innerHTML = "✅ Website is online and reachable!";
+        } else {
+          result.innerHTML = "❌ Website may be down or unreachable";
+        }
       } catch (error) {
-        result.innerHTML = "❌ Unable to reach the website. It may be down or blocked.";
+        result.innerHTML = "❌ Error checking website. Please try again.";
+        console.error("Error:", error);
       }
     }
+    
+    // Allow pressing Enter to trigger the check
+    document.getElementById('urlInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkWebsite();
+      }
+    });
   </script>
 </body>
 </html>
