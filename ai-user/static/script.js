@@ -61,19 +61,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Drag and drop
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadArea.style.borderColor = 'var(--primary-color)';
-            uploadArea.style.backgroundColor = 'rgba(67, 97, 238, 0.05)';
+            uploadArea.classList.add('dragover');
         });
         
         uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = '#ced4da';
-            uploadArea.style.backgroundColor = 'transparent';
+            uploadArea.classList.remove('dragover');
         });
         
         uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
-            uploadArea.style.borderColor = '#ced4da';
-            uploadArea.style.backgroundColor = 'transparent';
+            uploadArea.classList.remove('dragover');
             
             if (e.dataTransfer.files.length) {
                 fileInput.files = e.dataTransfer.files;
@@ -90,16 +87,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!file) return;
         
-        // Validate file
-        if ((type === 'image' && !file.type.startsWith('image/')) || 
-            (type === 'video' && !file.type.startsWith('video/'))) {
-            showError(`Please upload a valid ${type} file`);
+        // Validate file type
+        const validTypes = {
+            'image': ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+            'video': ['video/mp4', 'video/webm', 'video/ogg']
+        };
+        
+        if (!validTypes[type].includes(file.type)) {
+            showError(`Please upload a valid ${type} file (${validTypes[type].join(', ')})`);
             return;
         }
         
-        // Check file size (10MB limit)
-        // if (file.size > 10 * 1024 * 1024) {
-        //     showError('File size should be less than 10MB');
+        // // Check file size (10MB limit for images, 50MB for videos)
+        // const maxSize = type === 'image' ? 10 * 1024 * 1024 : 50 * 1024 * 1024;
+        // if (file.size > maxSize) {
+        //     showError(`File size should be less than ${type === 'image' ? '10MB' : '50MB'}`);
         //     return;
         // }
         
@@ -118,30 +120,80 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             reader.readAsDataURL(file);
         } else {
-            previewElement.src = URL.createObjectURL(file);
+            const videoURL = URL.createObjectURL(file);
+            previewElement.src = videoURL;
             previewElement.style.display = 'block';
             analyzeVideoBtn.disabled = false;
             resetResults();
+            
+            // Generate thumbnail when video metadata is loaded
+            previewElement.addEventListener('loadedmetadata', function() {
+                this.currentTime = Math.min(1, this.duration / 4);
+            });
+            
+            previewElement.addEventListener('seeked', function() {
+                createVideoThumbnail(this, (thumbnail) => {
+                    // Store thumbnail for later use
+                    this.dataset.thumbnail = thumbnail;
+                });
+            });
         }
     }
     
+    function createVideoThumbnail(video, callback) {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        callback(canvas.toDataURL('image/jpeg'));
+    }
+    
     function analyzeContent(type) {
-        if (!currentFile) return;
+        if (!currentFile) {
+            showError('No file selected');
+            return;
+        }
         
         // Show loading state
         document.getElementById('result-loading').style.display = 'flex';
         document.getElementById('result-content').style.display = 'none';
         document.getElementById('result-error').style.display = 'none';
         
-        // Create thumbnail
-        createThumbnail(currentFile, type, (thumbnail) => {
+        // Create thumbnail based on file type
+        const createThumbnail = (callback) => {
+            if (type === 'image') {
+                const reader = new FileReader();
+                reader.onload = (e) => callback(e.target.result);
+                reader.readAsDataURL(currentFile);
+            } else {
+                // Use the thumbnail we already generated
+                const thumbnail = videoPreview.dataset.thumbnail;
+                if (thumbnail) {
+                    callback(thumbnail);
+                } else {
+                    // Fallback if thumbnail wasn't generated
+                    callback('');
+                }
+            }
+        };
+        
+        createThumbnail((thumbnail) => {
             // Simulate API call with timeout
             setTimeout(() => {
                 try {
-                    // Generate mock analysis results
+                    // Generate more realistic mock analysis results
                     const isAI = Math.random() > 0.5;
-                    const probability = isAI ? Math.random() * 30 + 70 : Math.random() * 30;
-                    const features = generateFeatures(isAI);
+                    let probability;
+                    
+                    // Adjust probability distribution for more realistic results
+                    if (isAI) {
+                        // AI content tends to score higher (70-95%)
+                        probability = Math.random() * 25 + 70;
+                    } else {
+                        // Human content tends to score lower (5-30%)
+                        probability = Math.random() * 25 + 5;
+                    }
                     
                     // Create history item
                     const historyItem = {
@@ -152,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         isAI: isAI,
                         probability: probability,
                         date: new Date().toLocaleString(),
-                        features: features
+                        features: generateFeatures(isAI, type)
                     };
                     
                     // Add to history
@@ -166,43 +218,41 @@ document.addEventListener('DOMContentLoaded', function() {
                     renderHistory();
                 } catch (error) {
                     showError('Analysis failed. Please try again.');
-                    console.error(error);
+                    console.error('Analysis error:', error);
                 }
             }, 1500);
         });
     }
     
-    function createThumbnail(file, type, callback) {
-        if (type === 'image') {
-            const reader = new FileReader();
-            reader.onload = (e) => callback(e.target.result);
-            reader.readAsDataURL(file);
-        } else {
-            const video = document.createElement('video');
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            video.src = URL.createObjectURL(file);
-            video.addEventListener('loadeddata', () => {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                callback(canvas.toDataURL());
-            });
-        }
-    }
-    
-    function generateFeatures(isAI) {
+    function generateFeatures(isAI, type) {
         const baseValues = isAI ? 
-            [70, 75, 65, 80] : // Higher values for AI
-            [30, 25, 35, 20];  // Lower values for human
+            {
+                'image': [70, 75, 65, 80],
+                'video': [65, 70, 60, 75]
+            } : {
+                'image': [30, 25, 35, 20],
+                'video': [35, 30, 40, 25]
+            };
         
-        return [
-            { name: 'Artifact Patterns', value: Math.round(baseValues[0] + (Math.random() * 20 - 10)) },
-            { name: 'Texture Consistency', value: Math.round(baseValues[1] + (Math.random() * 20 - 10)) },
-            { name: 'Noise Analysis', value: Math.round(baseValues[2] + (Math.random() * 20 - 10)) },
-            { name: 'Color Distribution', value: Math.round(baseValues[3] + (Math.random() * 20 - 10)) }
-        ];
+        const features = {
+            'image': [
+                'Artifact Patterns',
+                'Texture Consistency',
+                'Noise Analysis',
+                'Color Distribution'
+            ],
+            'video': [
+                'Frame Consistency',
+                'Motion Patterns',
+                'Compression Artifacts',
+                'Temporal Noise'
+            ]
+        };
+        
+        return features[type].map((name, index) => ({
+            name,
+            value: Math.round(baseValues[type][index] + (Math.random() * 20 - 10))
+        }));
     }
     
     function displayResults(item) {
@@ -216,7 +266,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update probability meter
         const probability = item.isAI ? item.probability : 100 - item.probability;
-        document.getElementById('probability-fill').style.width = `${probability}%`;
+        const probabilityFill = document.getElementById('probability-fill');
+        probabilityFill.style.width = `${probability}%`;
+        probabilityFill.className = `meter-fill ${probability > 70 ? 'high-probability' : probability > 30 ? 'medium-probability' : 'low-probability'}`;
         document.getElementById('probability-value').textContent = `${Math.round(probability)}%`;
         
         // Update verdict
@@ -242,7 +294,10 @@ document.addEventListener('DOMContentLoaded', function() {
             featureEl.className = 'feature-item';
             featureEl.innerHTML = `
                 <span class="feature-name">${feature.name}</span>
-                <span class="feature-value">${feature.value}%</span>
+                <div class="feature-bar-container">
+                    <div class="feature-bar" style="width: ${feature.value}%"></div>
+                    <span class="feature-value">${feature.value}%</span>
+                </div>
             `;
             featuresContainer.appendChild(featureEl);
         });
@@ -269,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
             historyList.innerHTML = `
                 <div class="empty-history">
                     <i class="fas fa-clock"></i>
-                    <p>No matching results found</p>
+                    <p>${analysisHistory.length === 0 ? 'No analysis history yet' : 'No matching results found'}</p>
                 </div>
             `;
             return;
@@ -281,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
             historyItem.className = 'history-item';
             historyItem.dataset.id = item.id;
             historyItem.innerHTML = `
-                <img src="${item.thumbnail}" class="history-thumbnail" alt="${item.name}">
+                <img src="${item.thumbnail || 'placeholder.jpg'}" class="history-thumbnail" alt="${item.name}">
                 <div class="history-details">
                     <div class="history-title">${item.name}</div>
                     <div class="history-meta">
@@ -289,6 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <span class="history-verdict ${item.isAI ? 'ai-verdict' : 'human-verdict'}">
                             ${item.isAI ? 'AI' : 'Human'}
                         </span>
+                        <span class="history-date">${item.date}</span>
                     </div>
                 </div>
             `;
@@ -316,7 +372,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function clearHistory() {
-        if (analysisHistory.length === 0 || confirm('Clear all analysis history?')) {
+        if (analysisHistory.length === 0) return;
+        
+        if (confirm('Are you sure you want to clear all analysis history?')) {
             analysisHistory = [];
             saveHistory();
             renderHistory();
@@ -361,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
         videoInput.value = '';
         videoPreview.src = '';
         videoPreview.style.display = 'none';
+        videoPreview.removeAttribute('data-thumbnail');
         analyzeVideoBtn.disabled = true;
         
         // Clear current file
