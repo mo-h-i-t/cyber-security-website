@@ -144,34 +144,16 @@
       text-decoration: underline;
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
-      .container {
-        padding: 25px;
-      }
-      
-      h1 {
-        font-size: 1.8rem;
-        margin-bottom: 25px;
-      }
+      .container { padding: 25px; }
+      h1 { font-size: 1.8rem; margin-bottom: 25px; }
     }
 
     @media (max-width: 480px) {
-      body {
-        padding: 30px 15px;
-      }
-      
-      .container {
-        padding: 20px;
-      }
-      
-      h1 {
-        font-size: 1.6rem;
-      }
-      
-      #urlInput, button {
-        padding: 12px 15px;
-      }
+      body { padding: 30px 15px; }
+      .container { padding: 20px; }
+      h1 { font-size: 1.6rem; }
+      #urlInput, button { padding: 12px 15px; }
     }
   </style>
 </head>
@@ -189,7 +171,7 @@
     
     <div id="result"></div>
     
-    <a href="home.html" class="back-btn">
+    <a href="home.html" class="back-btn" rel="noopener noreferrer">
       <span>←</span>
       <span>Back to Tools</span>
     </a>
@@ -197,26 +179,26 @@
 
   <script>
     async function checkWebsite() {
-      const url = document.getElementById('urlInput').value;
+      const url = document.getElementById('urlInput').value.trim();
       const result = document.getElementById('result');
       const buttonText = document.getElementById('buttonText');
       const buttonIcon = document.getElementById('buttonIcon');
-      
-      // Reset UI
+
       result.className = '';
+      result.style.display = 'block';
       buttonText.textContent = 'Checking...';
       buttonIcon.textContent = '⏳';
-      
+
       if (!url) {
         result.className = 'warning';
         result.innerHTML = "❗ Please enter a website URL";
         resetButton();
         return;
       }
-      
-      if (!url.startsWith('http')) {
+
+      if (!/^https?:\/\//i.test(url)) {
         result.className = 'warning';
-        result.innerHTML = "❗ Please enter a full URL starting with http:// or https://";
+        result.innerHTML = "❗ URL must start with http:// or https://";
         resetButton();
         return;
       }
@@ -225,16 +207,20 @@
       result.innerHTML = "Checking website availability...";
 
       try {
-        // Using a proxy to avoid CORS issues
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
         const response = await fetch(proxyUrl);
-        
+
         if (response.ok) {
-          result.className = 'success';
-          result.innerHTML = "✅ Website is online and accessible!";
+          const data = await response.json();
+          if (data && data.contents) {
+            result.className = 'success';
+            result.innerHTML = "✅ Website is online and accessible!";
+          } else {
+            result.className = 'warning';
+            result.innerHTML = "⚠️ Website responded, but no content found.";
+          }
         } else {
-          result.className = 'error';
-          result.innerHTML = "❌ Website may be down or blocking requests";
+          throw new Error("Response not OK");
         }
       } catch (error) {
         result.className = 'error';
@@ -243,7 +229,7 @@
         resetButton();
       }
     }
-    
+
     function resetButton() {
       document.getElementById('buttonText').textContent = 'Check Again';
       document.getElementById('buttonIcon').textContent = '🔍';
