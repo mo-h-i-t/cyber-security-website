@@ -4,35 +4,249 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Website Status Checker</title>
-  <link rel="stylesheet" href="/static/check-of-website.css">
-  
+  <style>
+    :root {
+      --primary-color: #00a8ff;
+      --secondary-color: #0097e6;
+      --dark-color: #1e272e;
+      --light-color: #f5f6fa;
+      --success-color: #4cd137;
+      --error-color: #e84118;
+      --warning-color: #fbc531;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: #2f3640;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.2rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    #urlInput {
+      padding: 15px;
+      border: 2px solid #4b4b4b;
+      border-radius: 8px;
+      background: #3d3d3d;
+      color: var(--light-color);
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    #urlInput:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.2);
+    }
+
+    button {
+      padding: 15px 25px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    #result {
+      margin-top: 30px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      text-align: center;
+      display: none;
+    }
+
+    .success {
+      background-color: rgba(76, 209, 55, 0.2);
+      border: 1px solid var(--success-color);
+      color: var(--success-color);
+      display: block;
+    }
+
+    .error {
+      background-color: rgba(232, 65, 24, 0.2);
+      border: 1px solid var(--error-color);
+      color: var(--error-color);
+      display: block;
+    }
+
+    .warning {
+      background-color: rgba(251, 197, 49, 0.2);
+      border: 1px solid var(--warning-color);
+      color: var(--warning-color);
+      display: block;
+    }
+
+    .loading {
+      background-color: rgba(0, 168, 255, 0.2);
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 30px 15px;
+      }
+      
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      #urlInput, button {
+        padding: 12px 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Website Status Checker</h1>
-  <input type="text" id="urlInput" placeholder="Enter website URL (e.g. https://example.com)" />
-  <button onclick="checkWebsite()">⏳ Checking...❗</button>
-  <div id="result"></div>
-  <a href="home.html" class="back" > back<<<</a>
+  <div class="container">
+    <h1>Website Status Checker</h1>
+    
+    <div class="input-group">
+      <input type="text" id="urlInput" placeholder="Enter website URL (e.g. https://example.com)" />
+      <button onclick="checkWebsite()">
+        <span id="buttonText">Check Website</span>
+        <span id="buttonIcon">🔍</span>
+      </button>
+    </div>
+    
+    <div id="result"></div>
+    
+    <a href="home.html" class="back-btn">
+      <span>←</span>
+      <span>Back to Tools</span>
+    </a>
+  </div>
 
   <script>
     async function checkWebsite() {
       const url = document.getElementById('urlInput').value;
       const result = document.getElementById('result');
+      const buttonText = document.getElementById('buttonText');
+      const buttonIcon = document.getElementById('buttonIcon');
+      
+      // Reset UI
+      result.className = '';
+      buttonText.textContent = 'Checking...';
+      buttonIcon.textContent = '⏳';
+      
+      if (!url) {
+        result.className = 'warning';
+        result.innerHTML = "❗ Please enter a website URL";
+        resetButton();
+        return;
+      }
       
       if (!url.startsWith('http')) {
+        result.className = 'warning';
         result.innerHTML = "❗ Please enter a full URL starting with http:// or https://";
+        resetButton();
         return;
       }
 
-      result.innerHTML = "⏳ Checking...";
+      result.className = 'loading';
+      result.innerHTML = "Checking website availability...";
 
       try {
-        const response = await fetch(url, { mode: 'no-cors' });
-
-        result.innerHTML = "✅ Website appears to be online!";
+        // Using a proxy to avoid CORS issues
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+        
+        if (response.ok) {
+          result.className = 'success';
+          result.innerHTML = "✅ Website is online and accessible!";
+        } else {
+          result.className = 'error';
+          result.innerHTML = "❌ Website may be down or blocking requests";
+        }
       } catch (error) {
-        result.innerHTML = "❌ Unable to reach the website. It may be down or blocked.";
+        result.className = 'error';
+        result.innerHTML = "❌ Unable to reach the website. It may be down or invalid.";
+      } finally {
+        resetButton();
       }
+    }
+    
+    function resetButton() {
+      document.getElementById('buttonText').textContent = 'Check Again';
+      document.getElementById('buttonIcon').textContent = '🔍';
     }
   </script>
 </body>
