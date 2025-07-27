@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohit's Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #00a8ff;
+            --secondary-color: #0097e6;
+            --dark-color: #1e272e;
+            --light-color: #f5f6fa;
+            --success-color: #4cd137;
+            --danger-color: #e84118;
+            --box-color: #312e2e;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        header {
+            width: 100%;
+            height: 60px;
+            background-color: var(--dark-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            padding: 80px 20px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .image img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 70px;
+            border: 5px solid var(--primary-color);
+        }
+        
+        .boxes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .box-s {
+            width: 100%;
+            max-width: 500px;
+            min-height: 400px;
+            background-color: var(--box-color);
+            border-radius: 20px;
+            padding-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .box-s h1 {
+            background-color: var(--dark-color);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            color: white;
+            padding: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .box-s p {
+            color: #bab4b4;
+            font-size: 1rem;
+            margin: 15px;
+            line-height: 1.6;
+        }
+        
+        @media (min-width: 768px) {
+            .image img {
+                margin-top: 20px;
+            }
+            
+            .box-s {
+                width: calc(50% - 20px);
+            }
+            
+            .box-s p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .boxes-container {
+                justify-content: space-between;
+            }
+            
+            .box-s {
+                width: calc(50% - 15px);
+            }
+            
+            .box-s h1 {
+                font-size: 1.8rem;
+            }
+            
+            .box-s p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    
+    <div class="container">
+        <div class="image">
+            <img src="../static/mohit .jpg" alt="Mohit Singh">
+        </div>
+        
+        <div class="boxes-container">
+            <div class="box-s">
+                <h1>Hii!</h1>
+                <p>↬ I am Mohit Singh.</p>
+                <p>↬ I Study in class 9th in MSVM (Vijay Hata Siwan).</p>
+                <p>↬ I like to develop websites</p>
+            </div>
+            
+            <div class="box-s">
+                <h1>Blue print of website</h1>
+                <p>
+                    ├── index.html<br/>
+                    ├── static/<br/>
+                    │   └── style.css<br/>
+                    │   ├── images<br/>
+                    ├── templates/<br/>
+                    │   └── home.html<br/>
+                    │   ├── how-make's.html<br/>
+                    │   ├── check_of_website.html<br/>
+                    ├── check-website<br/>
+                    │   └── index.html<br/> 
+                    │   ├── style.css<br/>
+                    │   ├── script.js<br/>
+                    ├── ai-user/<br/>
+                    │   ├── static<br/>
+                    │   └── script.js<br/>
+                    │   ├── style.css<br/>
+                    │   ├── template<br/>
+                    │   └── index.html<br/>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

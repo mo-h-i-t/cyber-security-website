@@ -20,8 +20,8 @@
 }
 
 body {
-    background-color: #f1f5f9;
-    color: var(--dark-color);
+    background-color: var(--dark-color);
+    color: var(--light-color);
     line-height: 1.6;
 }
 
@@ -67,7 +67,7 @@ header p {
 
 .history-section {
     flex: 1;
-    background-color: white;
+    background-color: var(--dark-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 20px;
@@ -123,7 +123,7 @@ header p {
     align-items: center;
     gap: 5px;
     cursor: pointer;
-    color: var(--dark-color);
+    color: var(--light-color);
 }
 
 .options input[type="checkbox"] {
@@ -133,7 +133,7 @@ header p {
 }
 
 .result-container {
-    background-color: white;
+    background-color:var(--light-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 25px;
