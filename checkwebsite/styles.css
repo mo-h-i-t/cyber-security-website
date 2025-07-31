@@ -20,8 +20,8 @@
 }
 
 body {
-    background-color: var(--dark-color);
-    color: var(--light-color);
+    background-color: var(--light-color);
+    color: var(--gray-color);
     line-height: 1.6;
 }
 
@@ -67,8 +67,8 @@ header p {
 
 .history-section {
     flex: 1;
-    background-color: var(--dark-color);
-    border-radius: var(--border-radius);
+    background-color: var(--light-color);
+    border-radius: var(--danger-color);
     box-shadow: var(--box-shadow);
     padding: 20px;
     height: fit-content;
