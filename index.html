@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Security | Glass Design</title>
+    <title>Cyber Security | Minimalist Design</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: rgba(0, 168, 255, 0.8);
-            --primary-dark: rgba(0, 151, 230, 0.9);
-            --secondary-color: rgba(46, 204, 113, 0.8);
-            --accent-color: rgba(243, 156, 18, 0.8);
-            --danger-color: rgba(231, 76, 60, 0.8);
-            --dark-color: rgba(30, 39, 46, 0.8);
-            --light-color: rgba(245, 246, 250, 0.9);
-            --glass-bg: rgba(255, 255, 255, 0.1);
+            --primary-color: rgba(255, 255, 255, 0.9);
+            --primary-dark: rgba(200, 200, 200, 0.8);
+            --secondary-color: rgba(150, 150, 150, 0.8);
+            --accent-color: rgba(120, 120, 120, 0.8);
+            --dark-color: rgba(0, 0, 0, 0.8);
+            --light-color: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(0, 0, 0, 0.3);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
             --blur-intensity: blur(15px);
         }
 
@@ -28,7 +27,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #000000, #222222, #333333);
             color: var(--light-color);
             min-height: 100vh;
             line-height: 1.6;
@@ -43,32 +42,36 @@
             backdrop-filter: var(--blur-intensity);
             -webkit-backdrop-filter: var(--blur-intensity);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--glass-shadow);
         }
 
         /* Navigation */
         .navbar {
-            composes: glass;
-            padding: 15px 30px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary-color);
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 15px;
         }
 
         .nav-links a {
@@ -76,132 +79,156 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 8px;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: var(--primary-color);
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--light-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
         }
 
         /* Hero Section */
         .hero {
-            composes: glass;
-            padding: 60px 40px;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 40px 20px;
             text-align: center;
-            margin-bottom: 40px;
-            background: rgba(0, 168, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 30px;
         }
 
         .typewriter h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            height: 80px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            height: 70px;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             max-width: 800px;
-            margin: 30px auto;
-            opacity: 0.9;
+            margin: 20px auto;
+            opacity: 0.85;
         }
 
         /* Buttons */
         .btn {
             display: inline-block;
-            background: var(--primary-color);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 12px 35px;
-            margin: 15px;
-            border: none;
+            padding: 10px 25px;
+            margin: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50px;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
             cursor: pointer;
             backdrop-filter: var(--blur-intensity);
-            box-shadow: 0 8px 32px rgba(0, 168, 255, 0.3);
         }
 
         .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 168, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
         }
 
         .btn-secondary {
             background: transparent;
-            border: 2px solid var(--primary-color);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: var(--primary-color);
         }
 
         .btn-secondary:hover {
-            background: var(--primary-color);
-            color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Features Section */
         .features {
-            padding: 60px 0;
+            padding: 40px 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
+            margin-bottom: 35px;
+            font-size: 2rem;
             color: var(--primary-color);
         }
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .feature {
-            composes: glass;
-            padding: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
             transition: all 0.3s ease;
             height: 100%;
         }
 
         .feature:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .feature h3 {
             color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .feature h3 i {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
         .feature p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            opacity: 0.9;
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.85;
         }
 
         /* Footer */
         footer {
-            composes: glass;
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
+            padding: 25px;
+            margin-top: 40px;
         }
 
         .footer-content {
@@ -212,14 +239,16 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-bottom: 20px;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
             color: var(--light-color);
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .footer-links a:hover {
@@ -227,30 +256,61 @@
         }
 
         .copyright {
-            opacity: 0.8;
-            font-size: 0.9rem;
+            opacity: 0.7;
+            font-size: 0.85rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                padding: 15px;
+                flex-direction: row;
+                padding: 12px 15px;
             }
             
             .nav-links {
-                margin-top: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.9);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 80px 30px 30px;
+                transition: right 0.3s ease;
+                z-index: 100;
+                gap: 20px;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
             }
             
             .typewriter h1 {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
                 height: 60px;
             }
             
             .hero p {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .feature-grid {
@@ -258,44 +318,72 @@
             }
             
             .btn {
-                padding: 10px 25px;
-                font-size: 1rem;
-                margin: 10px;
+                padding: 9px 20px;
+                font-size: 0.95rem;
+                margin: 8px;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .hero {
+                padding: 30px 15px;
+            }
+            
+            .typewriter h1 {
+                font-size: 1.6rem;
+                height: 50px;
+            }
+            
+            .feature {
+                padding: 20px;
+            }
+            
+            .feature h3 {
+                font-size: 1.2rem;
             }
         }
 
         /* Animation */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .animate {
-            animation: fadeIn 1s ease forwards;
+            animation: fadeIn 0.8s ease forwards;
         }
 
         .delay-1 { animation-delay: 0.2s; }
         .delay-2 { animation-delay: 0.4s; }
         .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
+   <nav class="navbar">
         <div class="logo">
             <i class="fas fa-shield-alt"></i>
             <span>CyberSecurity</span>
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
         <div class="nav-links">
             <a href="" class="active">Home</a>
             <a href="./templates/home.html">Tools</a>
             <a href="./templates/how-make's.html">About</a>
-            <a href="#">Contact</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="typewriter">
             <h1></h1>
@@ -307,7 +395,6 @@
         </div>
     </section>
     
-    <!-- Features Section -->
     <section id="features" class="features">
         <h2 class="section-title">Our Key Features</h2>
         <div class="feature-grid">
@@ -327,12 +414,11 @@
             </div>
             <div class="feature animate delay-3">
                 <h3><i class="fas fa-exclamation-triangle"></i> Important Note</h3>
-                <p>↬ Desired result might not be accurate in first checking</p>
+                <p>↬ Desired result might not be accurate in first checking(AI detector)</p>
             </div>
         </div>
     </section>
     
-    <!-- Footer -->
     <footer id="contact">
         <div class="footer-content">
             <div class="footer-links">
@@ -345,7 +431,7 @@
     </footer>
 
     <script>
-        // Array of texts to cycle through
+        // Typewriter effect
         const texts = [
             "Hello Friend, I am Mohit Singh.",
             "Welcome to cyber security website,",
@@ -370,13 +456,13 @@
             if (letter.length === currentText.length) {
                 count++;
                 index = 0;
-                setTimeout(type, 2000); // Pause before typing next text
+                setTimeout(type, 2000);
             } else {
-                setTimeout(type, 100); // Typing speed
+                setTimeout(type, 100);
             }
         }());
-
-        // Add animation class to elements when they come into view
+        
+        // Animation on load
         document.addEventListener('DOMContentLoaded', function() {
             const animatedElements = document.querySelectorAll('.animate');
             
@@ -389,6 +475,24 @@
                     element.style.opacity = '1';
                 });
             }, 100);
+            
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Close menu when clicking on a link
+            const navItems = document.querySelectorAll('.nav-links a');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
         });
     </script>
 </body>
