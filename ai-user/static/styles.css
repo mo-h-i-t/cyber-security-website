@@ -20,8 +20,8 @@
 }
 
 body {
-    background-color: #f1f5f9;
-    color: var(--dark-color);
+    background-color: var(--dark-color);
+    color: var(--light-color);
     line-height: 1.6;
 }
 
@@ -69,7 +69,7 @@ header p {
 }
 
 .upload-container {
-    background-color: white;
+    background-color: var(--dark-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     overflow: hidden;
@@ -205,7 +205,7 @@ header p {
 }
 
 .result-container {
-    background-color: white;
+    background-color: var(--dark-color);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 25px;
@@ -257,11 +257,11 @@ header p {
 }
 
 .result-header h3 {
-    color: var(--dark-color);
+    color: var(--light-color);
 }
 
 .date {
-    color: var(--gray-color);
+    color: var(--light-color);
     font-size: 0.9rem;
 }
 
@@ -280,7 +280,7 @@ header p {
 
 .meter-labels span:nth-child(2) {
     font-weight: bold;
-    color: var(--dark-color);
+    color: var(--light-color);
 }
 
 .meter-bar {
@@ -344,7 +344,7 @@ header p {
 
 .feature-name {
     font-weight: 500;
-    color: var(--dark-color);
+    color: var(--light-color);
 }
 
 .feature-value {

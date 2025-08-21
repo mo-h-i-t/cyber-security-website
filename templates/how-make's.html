@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohit's Portfolio</title>
+    <title>Mohit's Portfolio | Cyber Security</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #00a8ff;
-            --secondary-color: #0097e6;
-            --dark-color: #1e272e;
-            --light-color: #f5f6fa;
-            --success-color: #4cd137;
-            --danger-color: #e84118;
-            --box-color: #312e2e;
+            --primary-color: rgba(0, 168, 255, 0.8);
+            --primary-dark: rgba(0, 151, 230, 0.9);
+            --secondary-color: rgba(46, 204, 113, 0.8);
+            --accent-color: rgba(243, 156, 18, 0.8);
+            --danger-color: rgba(231, 76, 60, 0.8);
+            --dark-color: rgba(30, 39, 46, 0.8);
+            --light-color: rgba(245, 246, 250, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.2);
+            --blur-intensity: blur(15px);
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -22,172 +28,351 @@
         }
         
         body {
-            background-color: var(--dark-color);
-            color: white;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light-color);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+            background-attachment: fixed;
+            background-size: cover;
         }
-        
-        header {
-            width: 100%;
-            height: 60px;
-            background-color: var(--dark-color);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
+
+        /* Glassmorphism base styles */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px var(--glass-shadow);
         }
-        
+
+        /* Navigation */
+        .navbar {
+            composes: glass;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Container */
         .container {
-            padding: 80px 20px 20px;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
         
-        .image {
+        /* Profile Section */
+        .profile {
+            composes: glass;
             text-align: center;
-            margin-bottom: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            background: rgba(0, 168, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        .image img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 70px;
-            border: none solid var(--primary-color);
-            box-shadow:10px 10px 20px #000000;
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.5);
+            margin-bottom: 20px;
         }
         
+        .profile h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .profile p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Boxes Container */
         .boxes-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
         .box-s {
-            width: 100%;
-            max-width: 500px;
-            min-height: 200px;
-            background-color: var(--box-color);
-            border-radius: 20px;
-            padding-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+            composes: glass;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .box-s:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
         
         .box-s h1 {
-            background-color: var(--dark-color);
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            color: white;
-            padding: 15px;
-            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .box-s h1 i {
+            font-size: 1.6rem;
         }
         
         .box-s p {
-            color: #bab4b4;
-            font-size: 1rem;
-            margin: 15px;
-            line-height: 1.6;
+            padding: 20px;
+            color: var(--light-color);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
         }
         
-        @media (min-width: 768px) {
-            .image img {
-                margin-top: 20px;
-            }
-            
-            .box-s {
-                width: calc(50% - 20px);
-            }
-            
-            .box-s p {
-                font-size: 1.1rem;
-            }
+        .box-s code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
         }
         
-        @media (min-width: 1024px) {
+        /* Footer */
+        footer {
+            composes: glass;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .profile h1 {
+                font-size: 2rem;
+            }
+            
             .boxes-container {
-                justify-content: space-between;
-            }
-            
-            .box-s {
-                width: calc(50% - 15px);
+                grid-template-columns: 1fr;
             }
             
             .box-s h1 {
-                font-size: 1.8rem;
-            }
-            
-            .box-s p {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
         }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
-    <header></header>
-    
-    <div class="container">
-        <div class="image">
-            <img src="../static/mohit .jpg" alt="Mohit Singh">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-user-circle"></i>
+            <span>Mohit's Portfolio</span>
         </div>
+        <div class="nav-links">
+            <a href="../index.html" class="active">Home</a>
+            <a href="../templates/home.html">Tools</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Profile Section -->
+        <section class="profile animate">
+            <img src="../static/mohit .jpg" alt="Mohit Singh" class="profile-image">
+            <h1>Mohit Singh</h1>
+            <p>Class 9th Student & Web Developer</p>
+        </section>
         
+        <!-- Boxes Container -->
         <div class="boxes-container">
-            <div class="box-s">
-                <h1>Hii!</h1>
+            <div class="box-s animate">
+                <h1><i class="fas fa-smile"></i> Hello!</h1>
                 <p>↬ I am Mohit Singh.</p>
                 <p>↬ I Study in class 9th in MSVM (Vijay Hata Siwan).</p>
                 <p>↬ I like to develop websites</p>
             </div>
             
-            <div class="box-s">
-                <h1>Blue print of website</h1>
+            <div class="box-s animate delay-1">
+                <h1><i class="fas fa-sitemap"></i> Website Blueprint</h1>
                 <p>
                     ├── index.html<br/>
                     ├── static/<br/>
-                    │   └── style.css<br/>
-                    │   ├── images<br/>
+                    │   └── style.css<br/>
+                    │   ├── images<br/>
                     ├── templates/<br/>
-                    │   └── home.html<br/>
-                    │   ├── how-make's.html<br/>
-                    │   ├── check_of_website.html<br/>
+                    │   └── home.html<br/>
+                    │   ├── how-make's.html<br/>
+                    │   ├── check_of_website.html<br/>
                     ├── check-website<br/>
-                    │   └── index.html<br/> 
-                    │   ├── style.css<br/>
-                    │   ├── script.js<br/>
+                    │   └── index.html<br/> 
+                    │   ├── style.css<br/>
+                    │   ├── script.js<br/>
                     ├── ai-user/<br/>
-                    │   ├── static<br/>
-                    │   └── script.js<br/>
-                    │   ├── style.css<br/>
-                    │   ├── template<br/>
-                    │   └── index.html<br/>
+                    │   ├── static<br/>
+                    │   └── script.js<br/>
+                    │   ├── style.css<br/>
+                    │   ├── template<br/>
+                    │   └── index.html<br/>
                 </p>
             </div>
-            <div class="box-s">
-                <h1>Front-page base code</h1>
+            
+            <div class="box-s animate delay-2">
+                <h1><i class="fas fa-code"></i> Front-page Base Code</h1>
                 <p>
-                    !DOCTYPE html <br>
-                    html lang="en"<br>
-                    head<br>
-                        meta charset="UTF-8"<br>
-                        meta name="viewport" content="width=device-width, initial-scale=1.0"<br>
-                        title Document title<br>
-                    /head<br>
-                    body<br>
-
-                       Hy I am Mohit kumar <br>
-     
-                    /body<br>
-                    /html<br>
+                    <code>&lt;!DOCTYPE html&gt;</code><br>
+                    <code>&lt;html lang="en"&gt;</code><br>
+                    <code>&lt;head&gt;</code><br>
+                    <code>&nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;</code><br>
+                    <code>&nbsp;&nbsp;&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code><br>
+                    <code>&nbsp;&nbsp;&lt;title&gt;Document&lt;/title&gt;</code><br>
+                    <code>&lt;/head&gt;</code><br>
+                    <code>&lt;body&gt;</code><br>
+                    <code>&nbsp;&nbsp;Hy I am Mohit kumar</code><br>
+                    <code>&lt;/body&gt;</code><br>
+                    <code>&lt;/html&gt;</code><br>
                 </p>
             </div>
-            <div class="box-s">
-                <h1>Useing</h1>
-                <p>↬ HTML <BR> ↬CSS <BR> ↬JS</p>
+            
+            <div class="box-s animate delay-3">
+                <h1><i class="fas fa-laptop-code"></i> Technologies Used</h1>
+                <p>↬ HTML <BR> ↬ CSS <BR> ↬ JavaScript</p>
             </div>
-            <div class="box-s"> 
-                <h1>How to use </h1>
-                <p>↬ Check the  authenticity any websites <br>↬ AI Content Detector <br>↬ Analyze websites for security vulnerabilities </p>
+            
+            <div class="box-s animate delay-4">
+                <h1><i class="fas fa-tools"></i> How To Use</h1>
+                <p>↬ Check the authenticity of any websites <br>↬ AI Content Detector <br>↬ Analyze websites for security vulnerabilities </p>
             </div>
         </div>
     </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="../templates/home.html">Tools</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact</a>
+            </div>
+            <p class="copyright">© 2025 Mohit's Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add animation class to elements when they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate');
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+            });
+            
+            setTimeout(() => {
+                animatedElements.forEach(element => {
+                    element.style.opacity = '1';
+                });
+            }, 100);
+        });
+    </script>
 </body>
 </html>
