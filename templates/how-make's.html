@@ -3,38 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohit's Portfolio | Cyber Security</title>
+    <title>Mohit's Portfolio | Cyber Security Specialist</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: rgba(0, 168, 255, 0.8);
-            --primary-dark: rgba(0, 151, 230, 0.9);
-            --secondary-color: rgba(46, 204, 113, 0.8);
-            --accent-color: rgba(243, 156, 18, 0.8);
-            --danger-color: rgba(231, 76, 60, 0.8);
-            --dark-color: rgba(30, 39, 46, 0.8);
-            --light-color: rgba(245, 246, 250, 0.9);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.2);
-            --blur-intensity: blur(15px);
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #06d6a0;
+            --accent: #ffd166;
+            --danger: #ef476f;
+            --dark: #1e2a38;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: rgba(0, 0, 0, 0.15);
+            --blur-intensity: blur(16px);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: var(--light-color);
+            color: var(--light);
             min-height: 100vh;
             line-height: 1.6;
             padding: 20px;
             background-attachment: fixed;
             background-size: cover;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Advanced Background with Particles */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a192f 0%, #172a45 50%, #0d1b2a 100%);
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(41, 98, 255, 0.2) 0%, transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(239, 71, 111, 0.2) 0%, transparent 30%),
+                radial-gradient(circle at 50% 80%, rgba(6, 214, 160, 0.2) 0%, transparent 30%);
+        }
+
+        .particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        .pulse-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        /* Animated grid lines */
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: grid-move 20s infinite linear;
+        }
+
+        @keyframes grid-move {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 40px 40px;
+            }
         }
 
         /* Glassmorphism base styles */
@@ -43,52 +151,78 @@
             backdrop-filter: var(--blur-intensity);
             -webkit-backdrop-filter: var(--blur-intensity);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
         }
 
         /* Navigation */
         .navbar {
             composes: glass;
-            padding: 15px 30px;
+            padding: 18px 35px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            transition: var(--transition);
+        }
+
+        .navbar:hover {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.5rem;
+            gap: 12px;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 30px;
         }
 
         .nav-links a {
-            color: var(--light-color);
+            color: var(--light);
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 8px;
+            transition: var(--transition);
+            padding: 10px 18px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
         }
 
         .nav-links a:hover, .nav-links a.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--primary-color);
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::before, .nav-links a.active::before {
+            width: 100%;
         }
 
         /* Container */
         .container {
-            padding: 20px;
-            max-width: 1200px;
+            padding: 25px;
+            max-width: 1300px;
             margin: 0 auto;
         }
         
@@ -96,143 +230,240 @@
         .profile {
             composes: glass;
             text-align: center;
-            padding: 40px;
-            margin-bottom: 40px;
-            background: rgba(0, 168, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 50px 40px;
+            margin-bottom: 45px;
+            background: linear-gradient(120deg, rgba(67, 97, 238, 0.15) 0%, rgba(6, 214, 160, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
         }
         
         .profile-image {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--primary-color);
-            box-shadow: 0 0 30px rgba(0, 168, 255, 0.5);
-            margin-bottom: 20px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 35px rgba(67, 97, 238, 0.5);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .profile-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 45px rgba(67, 97, 238, 0.6);
         }
         
         .profile h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
         }
         
         .profile p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            color: rgba(255, 255, 255, 0.85);
         }
         
         /* Boxes Container */
         .boxes-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            margin-bottom: 45px;
         }
         
         .box-s {
             composes: glass;
             padding: 0;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             height: 100%;
+            position: relative;
+        }
+        
+        .box-s::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(67, 97, 238, 0.1) 0%, rgba(6, 214, 160, 0.05) 100%);
+            opacity: 0;
+            transition: var(--transition);
         }
         
         .box-s:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+        }
+        
+        .box-s:hover::before {
+            opacity: 1;
         }
         
         .box-s h1 {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            font-size: 1.4rem;
-            color: var(--primary-color);
+            background: rgba(0, 0, 0, 0.25);
+            padding: 22px;
+            font-size: 1.5rem;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .box-s h1 i {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
+            color: var(--secondary);
         }
         
         .box-s p {
-            padding: 20px;
-            color: var(--light-color);
-            font-size: 1.1rem;
+            padding: 25px;
+            color: var(--light);
+            font-size: 1.15rem;
             line-height: 1.8;
             opacity: 0.9;
+            position: relative;
         }
         
         .box-s code {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
         }
         
         /* Footer */
         footer {
             composes: glass;
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
+            padding: 35px;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
         
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin-bottom: 20px;
+            gap: 30px;
+            margin-bottom: 25px;
         }
         
         .footer-links a {
-            color: var(--light-color);
+            color: var(--light);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: var(--transition);
         }
         
         .footer-links a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
         }
         
         .copyright {
             opacity: 0.8;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         /* Responsive Design */
+        @media (max-width: 900px) {
+            .boxes-container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 25px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                padding: 15px;
+                padding: 20px;
+                text-align: center;
             }
             
             .nav-links {
-                margin-top: 15px;
+                margin-top: 20px;
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 15px;
+            }
+            
+            .profile {
+                padding: 35px 25px;
             }
             
             .profile-image {
-                width: 150px;
-                height: 150px;
+                width: 180px;
+                height: 180px;
             }
             
             .profile h1 {
-                font-size: 2rem;
+                font-size: 2.3rem;
+            }
+            
+            .profile p {
+                font-size: 1.1rem;
             }
             
             .boxes-container {
@@ -240,60 +471,163 @@
             }
             
             .box-s h1 {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
+                padding: 18px;
+            }
+            
+            .box-s p {
+                padding: 20px;
+                font-size: 1.05rem;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 20px;
             }
         }
 
         /* Animation */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .animate {
-            animation: fadeIn 1s ease forwards;
+            animation: fadeInUp 0.8s ease forwards;
         }
 
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.45s; }
+        .delay-4 { animation-delay: 0.6s; }
+        .delay-5 { animation-delay: 0.75s; }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
     </style>
 </head>
 <body>
+    <!-- Advanced Background -->
+    <div class="background-container">
+        <div class="gradient-bg"></div>
+        <div class="gradient-overlay"></div>
+        <div class="grid-lines"></div>
+        <div class="particles-container" id="particles-container"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
-            <i class="fas fa-user-circle"></i>
-            <span>Mohit's Portfolio</span>
+            <i class="fas fa-shield-alt"></i>
+            <span>Mohit's Cyber Portfolio</span>
         </div>
         <div class="nav-links">
             <a href="../index.html" class="active">Home</a>
             <a href="../templates/home.html">Tools</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
+            <a href="../templates/how-make's.html">About</a>
+            
         </div>
     </nav>
 
     <div class="container">
         <!-- Profile Section -->
         <section class="profile animate">
-            <img src="../static/mohit .jpg" alt="Mohit Singh" class="profile-image">
+            <img src="/static/mohit .jpg" alt="Mohit Singh" class="profile-image">
             <h1>Mohit Singh</h1>
-            <p>Class 9th Student & Web Developer</p>
+            <p>Class 9th Student & Cyber Security Enthusiast</p>
         </section>
         
         <!-- Boxes Container -->
         <div class="boxes-container">
             <div class="box-s animate">
-                <h1><i class="fas fa-smile"></i> Hello!</h1>
+                <h1><i class="fas fa-user-circle"></i> About Me</h1>
                 <p>↬ I am Mohit Singh.</p>
                 <p>↬ I Study in class 9th in MSVM (Vijay Hata Siwan).</p>
-                <p>↬ I like to develop websites</p>
+                <p>↬ I'm passionate about web development and cybersecurity</p>
+            </div>
+
+            <div class="box-s animate delay-1">
+                <h1><i class="fas fa-tools"></i> Tool Overview</h1>
+                <p>↬ Check the authenticity of any websites <br>↬ AI Content Detector <br>↬ Analyze websites for security vulnerabilities </p>
+            </div>
+
+            <div class="box-s animate delay-2">
+                <h1><i class="fas fa-shield-alt"></i> How Cybersecurity Works</h1>
+                <p>Cyber security works by protecting computers, networks, applications, and data from unauthorized access, attacks, or damage. It combines technology, processes, and human awareness to defend against cyber threats.</p>
+            </div>
+            
+            <div class="box-s animate delay-3">
+                <h1><i class="fas fa-layer-group"></i> Layers of Cyber Security</h1>
+                <p>
+                   ↬ <strong>Network Security</strong> → Protects internal networks from intruders<br/>
+                   ↬ <strong>Application Security</strong> → Ensures software is designed securely<br>
+                   ↬ <strong>Endpoint Security</strong> → Protects devices like laptops, phones<br>
+                   ↬ <strong>Data Security</strong> → Encrypts sensitive data, controls access<br>
+                   ↬ <strong>Identity & Access Management</strong> → Confirms only authorized access<br>
+                   ↬ <strong>Cloud Security</strong> → Protects data and apps in cloud platforms<br>
+                   ↬ <strong>Human Factor</strong> → Trains people to avoid security threats
+                </p>
+            </div>
+            
+            <div class="box-s animate delay-4">
+                <h1><i class="fas fa-shield-virus"></i> Protection Mechanisms</h1>
+                <p>
+                   ↬ <strong>Prevention</strong> → Firewalls, antivirus, strong authentication<br>
+                   ↬ <strong>Detection</strong> → Monitoring tools detect suspicious behavior<br>
+                   ↬ <strong>Response</strong> → Incident response teams investigate attacks<br>
+                   ↬ <strong>Recovery</strong> → Restoring systems and data from backups<br>
+                </p>
             </div>
             
             <div class="box-s animate delay-1">
-                <h1><i class="fas fa-sitemap"></i> Website Blueprint</h1>
+                <h1><i class="fas fa-bug"></i> Types of Threats</h1>
+                <p>
+                    ↬ Malware (viruses, worms, ransomware)<br>
+                    ↬ Phishing & Social Engineering attacks<br>
+                    ↬ DDoS Attacks (overloading servers)<br>
+                    ↬ Man-in-the-Middle Attacks<br>
+                    ↬ Zero-day Exploits<br>
+                    ↬ Insider Threats<br>
+                </p>
+            </div>
+            
+            <div class="box-s animate delay-2">
+                <h1><i class="fas fa-check-circle"></i> Security Best Practices</h1>
+                <p>↬ Regular software updates & patches<br>
+                   ↬ Data encryption (at rest & in transit)<br>
+                   ↬ Backup & disaster recovery plans<br>
+                   ↬ Monitoring & logging for early detection<br>
+                   ↬ Security awareness training for users</p>
+            </div>
+            
+            <div class="box-s animate delay-3">
+                <h1><i class="fas fa-sitemap"></i> Website Architecture</h1>
                 <p>
                     ├── index.html<br/>
                     ├── static/<br/>
@@ -316,8 +650,8 @@
                 </p>
             </div>
             
-            <div class="box-s animate delay-2">
-                <h1><i class="fas fa-code"></i> Front-page Base Code</h1>
+            <div class="box-s animate delay-4">
+                <h1><i class="fas fa-code"></i> HTML Base Structure</h1>
                 <p>
                     <code>&lt;!DOCTYPE html&gt;</code><br>
                     <code>&lt;html lang="en"&gt;</code><br>
@@ -327,20 +661,15 @@
                     <code>&nbsp;&nbsp;&lt;title&gt;Document&lt;/title&gt;</code><br>
                     <code>&lt;/head&gt;</code><br>
                     <code>&lt;body&gt;</code><br>
-                    <code>&nbsp;&nbsp;Hy I am Mohit kumar</code><br>
+                    <code>&nbsp;&nbsp;&lt;!-- Content goes here --&gt;</code><br>
                     <code>&lt;/body&gt;</code><br>
                     <code>&lt;/html&gt;</code><br>
                 </p>
             </div>
             
-            <div class="box-s animate delay-3">
-                <h1><i class="fas fa-laptop-code"></i> Technologies Used</h1>
-                <p>↬ HTML <BR> ↬ CSS <BR> ↬ JavaScript</p>
-            </div>
-            
-            <div class="box-s animate delay-4">
-                <h1><i class="fas fa-tools"></i> How To Use</h1>
-                <p>↬ Check the authenticity of any websites <br>↬ AI Content Detector <br>↬ Analyze websites for security vulnerabilities </p>
+            <div class="box-s animate delay-1">
+                <h1><i class="fas fa-laptop-code"></i> Technologies</h1>
+                <p>↬ HTML5 <BR> ↬ CSS3 <BR> ↬ JavaScript <BR> ↬ Security Tools</p>
             </div>
         </div>
     </div>
@@ -354,7 +683,7 @@
                 <a href="#">Privacy Policy</a>
                 <a href="#">Contact</a>
             </div>
-            <p class="copyright">© 2025 Mohit's Portfolio. All rights reserved.</p>
+            <p class="copyright">© 2025 Mohit's Cyber Portfolio. All rights reserved.</p>
         </div>
     </footer>
 
@@ -372,7 +701,104 @@
                     element.style.opacity = '1';
                 });
             }, 100);
+            
+            // Add intersection observer for scroll animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // Create particles for background
+            createParticles();
+            createPulseCircles();
         });
+
+        // Function to create animated particles
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = 15 + Math.random() * 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}vw`;
+                particle.style.top = `${posY}vh`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random color based on theme
+                const colors = [
+                    'rgba(67, 97, 238, 0.6)', 
+                    'rgba(6, 214, 160, 0.6)', 
+                    'rgba(255, 209, 102, 0.6)',
+                    'rgba(239, 71, 111, 0.6)',
+                    'rgba(255, 255, 255, 0.6)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Function to create pulse circles
+        function createPulseCircles() {
+            const container = document.getElementById('particles-container');
+            const circleCount = 5;
+            
+            for (let i = 0; i < circleCount; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('pulse-circle');
+                
+                // Random properties
+                const size = Math.random() * 300 + 100;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = 8 + Math.random() * 4;
+                
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${posX}vw`;
+                circle.style.top = `${posY}vh`;
+                circle.style.animationDelay = `${delay}s`;
+                circle.style.animationDuration = `${duration}s`;
+                
+                // Random color based on theme
+                const colors = [
+                    'rgba(67, 97, 238, 0.1)', 
+                    'rgba(6, 214, 160, 0.1)', 
+                    'rgba(255, 209, 102, 0.1)',
+                    'rgba(239, 71, 111, 0.1)'
+                ];
+                circle.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(circle);
+            }
+        }
     </script>
 </body>
 </html>

@@ -3,45 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Security Tools</title>
+    <title>Cyber Security Tools | CyberGuard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #00a8ff;
-            --primary-dark: #0097e6;
-            --secondary-color: #2ecc71;
-            --accent-color: #f39c12;
-            --danger-color: #e74c3c;
-            --dark-color: #1e272e;
-            --darker-color: #12181d;
-            --light-color: #f5f6fa;
-            --gray-color: #718093;
-            --card-bg: #2f3640;
-            --card-hover: #353b48;
-            --success-color: #4cd137;
-            --border-radius: 12px;
-            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            --transition: all 0.3s ease;
+            --primary: rgba(0, 247, 255, 0.7);
+            --primary-dark: rgba(0, 200, 206, 0.8);
+            --secondary: rgba(255, 56, 140, 0.7);
+            --secondary-dark: rgba(220, 40, 120, 0.8);
+            --accent: rgba(162, 89, 255, 0.7);
+            --dark: rgba(10, 12, 18, 0.95);
+            --light: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(15, 20, 30, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --blur-intensity: blur(20px);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--darker-color) 0%, var(--dark-color) 100%);
-            color: var(--light-color);
+            background: linear-gradient(135deg, #050510 0%, #151525 50%, #0a0c1a 100%);
+            color: var(--light);
             min-height: 100vh;
             line-height: 1.6;
+            background-attachment: fixed;
+        }
+
+        /* Particles background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
 
         /* Navigation */
         .navbar {
-            background-color: rgba(30, 39, 46, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 12, 18, 0.8);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
             padding: 15px 5%;
             position: fixed;
             width: 100%;
@@ -50,7 +59,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .logo {
@@ -59,7 +69,13 @@
             gap: 10px;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+
+        .logo i {
+            color: var(--secondary);
+            filter: drop-shadow(0 0 8px rgba(255, 56, 140, 0.5));
         }
 
         .nav-links {
@@ -68,17 +84,18 @@
         }
 
         .nav-links a {
-            color: var(--light-color);
+            color: var(--light);
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
         }
 
         .nav-links a:hover, .nav-links a.active {
-            background-color: rgba(0, 168, 255, 0.2);
-            color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* Main Content */
@@ -96,14 +113,15 @@
         .page-header h1 {
             font-size: 2.8rem;
             margin-bottom: 15px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
 
         .page-header p {
             font-size: 1.2rem;
-            color: var(--gray-color);
+            opacity: 0.9;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -117,11 +135,14 @@
         }
 
         .tool-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             overflow: hidden;
             transition: var(--transition);
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -129,8 +150,8 @@
 
         .tool-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            background: var(--card-hover);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(15, 20, 30, 0.7);
         }
 
         .tool-image {
@@ -149,45 +170,51 @@
         .tool-title {
             font-size: 1.4rem;
             margin-bottom: 12px;
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .tool-desc {
-            color: var(--gray-color);
+            opacity: 0.9;
             margin-bottom: 20px;
             flex-grow: 1;
         }
 
         .tool-cta {
             display: inline-block;
-            background: var(--primary-color);
-            color: white;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
             padding: 12px 25px;
-            border-radius: 8px;
+            border-radius: 50px;
             text-align: center;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
             align-self: flex-start;
+            box-shadow: 0 5px 15px rgba(0, 247, 255, 0.3);
         }
 
         .tool-card:hover .tool-cta {
-            background: var(--primary-dark);
+            background: linear-gradient(45deg, var(--secondary), var(--secondary-dark));
             transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 56, 140, 0.4);
         }
 
         /* Features Section */
         .features-section {
-            background: rgba(47, 54, 64, 0.5);
-            border-radius: var(--border-radius);
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             padding: 40px;
             margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .section-title {
             font-size: 2rem;
             margin-bottom: 30px;
-            color: var(--primary-color);
+            color: var(--primary);
             text-align: center;
         }
 
@@ -198,21 +225,27 @@
         }
 
         .feature {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.05);
             padding: 25px;
-            border-radius: var(--border-radius);
+            border-radius: 16px;
             transition: var(--transition);
+            border: 1px solid var(--glass-border);
         }
 
         .feature:hover {
             transform: translateY(-5px);
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         .feature i {
             font-size: 2.5rem;
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .feature h3 {
@@ -221,14 +254,17 @@
         }
 
         .feature p {
-            color: var(--gray-color);
+            opacity: 0.9;
         }
 
         /* Footer */
         footer {
-            background-color: var(--darker-color);
+            background: rgba(10, 12, 18, 0.8);
+            backdrop-filter: var(--blur-intensity);
+            -webkit-backdrop-filter: var(--blur-intensity);
             padding: 40px 5%;
             text-align: center;
+            border-top: 1px solid var(--glass-border);
         }
 
         .footer-content {
@@ -244,17 +280,19 @@
         }
 
         .footer-links a {
-            color: var(--gray-color);
+            color: var(--light);
             text-decoration: none;
             transition: var(--transition);
+            opacity: 0.8;
         }
 
         .footer-links a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
+            opacity: 1;
         }
 
         .copyright {
-            color: var(--gray-color);
+            opacity: 0.8;
             font-size: 0.9rem;
         }
 
@@ -269,6 +307,7 @@
                 margin-top: 15px;
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 15px;
             }
             
             .page-header h1 {
@@ -285,6 +324,10 @@
             
             .features-section {
                 padding: 25px;
+            }
+            
+            .main-content {
+                padding: 120px 5% 50px;
             }
         }
 
@@ -305,15 +348,18 @@
     </style>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-shield-alt"></i>
-            <span>Cyber-Tools</span>
+            <span>CyberGuard</span>
         </div>
         <div class="nav-links">
-            <a href="../index.html" class="active">Home</a>
-            <a href="home.html">Tools</a>
+            <a href="../index.html">Home</a>
+            <a href="home.html" class="active">Tools</a>
             <a href="how-make's.html">About</a>
         </div>
     </nav>
@@ -331,7 +377,7 @@
                 <img src="https://images.unsplash.com/photo-1563207153-f403bf289096?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Introduction" class="tool-image">
                 <div class="tool-content">
                     <h3 class="tool-title">Introduction</h3>
-                    <p class="tool-desc">Learn about who make it's and how</p>
+                    <p class="tool-desc">Learn about who made it and how these tools work</p>
                     <a href="how-make's.html" class="tool-cta">Explore</a>
                 </div>
             </div>
@@ -340,8 +386,8 @@
                 <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Website Validator" class="tool-image">
                 <div class="tool-content">
                     <h3 class="tool-title">Website Checker</h3>
-                    <p class="tool-desc">Check if any website is authenticity /(useful) or (harmful)</p>
-                    <a href="check_of_website.html" class="tool-cta">Checking...</a>
+                    <p class="tool-desc">Check if any website is authentic, useful, or potentially harmful</p>
+                    <a href="check_of_website.html" class="tool-cta">Check Now</a>
                 </div>
             </div>
 
@@ -392,20 +438,45 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Contact Us</a>
-            </div>
-            <p class="copyright">© 2025 CyberShield. All rights reserved.</p>
-        </div>
-    </footer>
 
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Particles.js configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#00f7ff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#00f7ff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
         // Add animation class to elements when they come into view
         document.addEventListener('DOMContentLoaded', function() {
             const animatedElements = document.querySelectorAll('.animate');
