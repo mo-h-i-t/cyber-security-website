@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Accessibility Checker | Glass Design</title>
+    <title>Website Accessibility Checker</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: rgba(0, 168, 255, 0.8);
-            --primary-dark: rgba(0, 151, 230, 0.9);
-            --secondary-color: rgba(46, 204, 113, 0.8);
-            --accent-color: rgba(243, 156, 18, 0.8);
-            --danger-color: rgba(231, 76, 60, 0.8);
-            --dark-color: rgba(30, 39, 46, 0.8);
-            --light-color: rgba(245, 246, 250, 0.9);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.2);
-            --blur-intensity: blur(15px);
+            --primary-color: #5b86e5;
+            --primary-dark: #365cb5;
+            --secondary-color: #3AD568;
+            --accent-color: #F8C471;
+            --danger-color: #E74C3C;
+            --bg-color: #1a2a6c;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-fade: rgba(255, 255, 255, 0.6);
+            --blur-intensity: blur(20px);
         }
 
         * {
@@ -28,109 +28,104 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: var(--light-color);
+            background: linear-gradient(135deg, #ffffff, #000000, #1a2a6c, #b21f1f, #fdbb2d, #3AD568, #ffffff, #000000);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            color: var(--text-light);
             min-height: 100vh;
             line-height: 1.6;
             padding: 20px;
             background-attachment: fixed;
-            background-size: cover;
         }
 
-        /* Glassmorphism base styles */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .glass {
-            background: var(--glass-bg);
+            background: var(--card-bg);
             backdrop-filter: var(--blur-intensity);
             -webkit-backdrop-filter: var(--blur-intensity);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px var(--glass-shadow);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-        }
-
-        /* Header */
-        header {
-            composes: glass;
-            text-align: center;
-            padding: 30px;
-            margin-bottom: 30px;
-            background: rgba(0, 168, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* Main Content */
-        .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 30px;
-            margin-bottom: 30px;
         }
-
+        
         @media (max-width: 1024px) {
-            .main-content {
+            .container {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Checker Section */
-        .checker-section {
-            composes: glass;
-            padding: 30px;
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary-color), #fdbb2d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
         }
 
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-fade);
+        }
+
+        .checker-section {
+            padding: 30px;
+        }
+        
         .input-group {
             display: flex;
             gap: 15px;
             margin-bottom: 25px;
         }
-
+        
         @media (max-width: 768px) {
             .input-group {
                 flex-direction: column;
             }
         }
 
-        #website-url {
+        input[type="url"], input[type="text"] {
             flex: 1;
             padding: 15px 20px;
             border: none;
             border-radius: 12px;
             font-size: 1rem;
             background: rgba(255, 255, 255, 0.1);
-            color: var(--light-color);
-            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
         }
-
-        #website-url:focus {
+        
+        input[type="url"]:focus, input[type="text"]:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(91, 134, 229, 0.3);
+        }
+        
+        input::placeholder {
+            color: var(--text-fade);
         }
 
-        #website-url::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        #check-btn {
+        button {
             padding: 15px 30px;
             background: var(--primary-color);
             color: white;
@@ -144,25 +139,25 @@
             align-items: center;
             gap: 10px;
         }
-
-        #check-btn:hover {
+        
+        button:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(91, 134, 229, 0.4);
         }
 
-        /* Options */
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+        .options-container {
             margin-bottom: 25px;
             padding: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
         }
-
-        .options label {
+        
+        .options-container label {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -170,45 +165,50 @@
             transition: all 0.3s ease;
             padding: 8px 15px;
             border-radius: 8px;
+            user-select: none;
         }
-
-        .options label:hover {
+        
+        .options-container label:hover {
             background: rgba(255, 255, 255, 0.1);
         }
-
-        .options input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary-color);
+        
+        input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        input[type="checkbox"]:checked {
+            background-color: var(--primary-color);
+        }
+        
+        input[type="checkbox"]:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        /* Result Container */
         .result-container {
-            composes: glass;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .result-container h2 {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 20px 30px;
-            margin: 0;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .result-box {
             padding: 30px;
             min-height: 500px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
         }
 
-        /* Loading */
         .loading {
             display: flex;
             flex-direction: column;
@@ -219,7 +219,7 @@
         .spinner {
             width: 60px;
             height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            border: 5px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             border-top-color: var(--primary-color);
             animation: spin 1s linear infinite;
@@ -231,34 +231,51 @@
 
         .loading p {
             font-size: 1.2rem;
-            opacity: 0.9;
+            color: var(--text-fade);
+        }
+        
+        .error {
+            color: var(--danger-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .error i {
+            font-size: 3rem;
+        }
+        
+        .error p {
+            font-size: 1.1rem;
+            max-width: 400px;
         }
 
-        /* Result Content */
-        #result-content {
+        .results-content {
             width: 100%;
+            display: none;
+            text-align: left;
         }
-
+        
         .result-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-end;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--card-border);
         }
-
+        
         .result-header h3 {
-            color: var(--light-color);
-            font-size: 1.4rem;
+            color: var(--text-light);
+            font-size: 1.6rem;
         }
-
-        .date {
-            color: rgba(255, 255, 255, 0.7);
+        
+        .result-header span {
+            color: var(--text-fade);
             font-size: 0.9rem;
         }
-
-        /* Overall Score */
+        
         .overall-score {
             display: flex;
             align-items: center;
@@ -276,49 +293,42 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: white;
-            background: conic-gradient(
-                var(--primary-color) 0%,
-                var(--primary-color) 0%,
-                rgba(255, 255, 255, 0.1) 0%,
-                rgba(255, 255, 255, 0.1) 100%
-            );
             transition: background 1s ease;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
         }
-
+        
         .score-text {
             flex: 1;
         }
-
+        
         .score-text h4 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin-bottom: 8px;
-            color: var(--light-color);
         }
-
+        
         .score-text p {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-fade);
             font-size: 1.1rem;
         }
 
-        /* Detailed Results */
         .detailed-results {
             margin-bottom: 30px;
         }
-
+        
         .result-category {
             margin-bottom: 25px;
         }
-
+        
         .result-category h4 {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
-            color: var(--light-color);
             font-size: 1.2rem;
+            color: var(--text-light);
         }
 
         .progress-bar {
@@ -329,56 +339,52 @@
             overflow: hidden;
             position: relative;
         }
-
+        
         .progress-fill {
             height: 100%;
             border-radius: 10px;
-            background: var(--primary-color);
             width: 0%;
             transition: width 1s ease;
-            position: relative;
         }
-
+        
         .progress-bar span {
             position: absolute;
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
             font-weight: bold;
-            color: var(--light-color);
+            color: var(--text-light);
             font-size: 0.9rem;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
         }
-
-        .issue-list {
+        
+        .issues-list {
             list-style: none;
-            padding-left: 10px;
+            padding-left: 20px;
         }
-
-        .issue-list li {
+        
+        .issues-list li {
             margin-bottom: 8px;
-            padding-left: 25px;
             position: relative;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-fade);
         }
-
-        .issue-list li::before {
+        
+        .issues-list li::before {
             content: '•';
             color: var(--danger-color);
             font-weight: bold;
             position: absolute;
-            left: 0;
+            left: -20px;
             font-size: 1.2rem;
         }
-
-        /* Recommendations */
+        
         .recommendations {
             padding: 25px;
-            background: rgba(46, 204, 113, 0.1);
+            background: rgba(58, 213, 104, 0.1);
             border-radius: 16px;
-            border: 1px solid rgba(46, 204, 113, 0.2);
+            border: 1px solid rgba(58, 213, 104, 0.2);
         }
-
+        
         .recommendations h4 {
             display: flex;
             align-items: center;
@@ -387,47 +393,28 @@
             color: var(--secondary-color);
             font-size: 1.2rem;
         }
-
+        
         .recommendations ul {
             list-style: none;
         }
-
+        
         .recommendations li {
             margin-bottom: 10px;
             padding-left: 30px;
             position: relative;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-fade);
         }
-
+        
         .recommendations li::before {
-            content: '✓';
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
             color: var(--secondary-color);
-            font-weight: bold;
             position: absolute;
             left: 0;
         }
 
-        /* Error */
-        #result-error {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            color: var(--danger-color);
-        }
-
-        #result-error i {
-            font-size: 3rem;
-        }
-
-        #error-message {
-            font-size: 1.1rem;
-            text-align: center;
-        }
-
-        /* History Section */
         .history-section {
-            composes: glass;
             padding: 25px;
             height: fit-content;
         }
@@ -438,17 +425,17 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--card-border);
         }
-
+        
         .history-header h2 {
-            color: var(--primary-color);
+            font-size: 1.4rem;
+            color: var(--text-light);
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.4rem;
         }
-
+        
         #clear-history {
             padding: 8px 15px;
             background: rgba(231, 76, 60, 0.2);
@@ -461,62 +448,43 @@
             align-items: center;
             gap: 8px;
         }
-
+        
         #clear-history:hover {
             background: rgba(231, 76, 60, 0.3);
         }
 
-        .history-controls {
+        .history-controls .search-box {
+            position: relative;
             margin-bottom: 20px;
         }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-box i {
+        
+        .history-controls .search-box i {
             position: absolute;
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-fade);
         }
-
+        
         #history-search {
-            width: 100%;
-            padding: 12px 15px 12px 45px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light-color);
-            border: 1px solid var(--glass-border);
+            padding-left: 45px;
         }
-
-        #history-search:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        #history-search::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
+        
         .history-list {
             max-height: 600px;
             overflow-y: auto;
             padding-right: 5px;
         }
-
+        
         .history-list::-webkit-scrollbar {
             width: 8px;
         }
-
+        
         .history-list::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
         }
-
+        
         .history-list::-webkit-scrollbar-thumb {
             background: var(--primary-color);
             border-radius: 4px;
@@ -531,45 +499,37 @@
             transition: all 0.3s ease;
             border: 1px solid transparent;
         }
-
+        
         .history-item:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: var(--glass-border);
+            border-color: var(--card-border);
             transform: translateY(-2px);
         }
-
+        
         .history-url {
             font-weight: 500;
             margin-bottom: 5px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: var(--light-color);
+            color: var(--text-light);
         }
-
+        
         .history-details {
             display: flex;
             justify-content: space-between;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-fade);
         }
-
+        
         .history-score {
             font-weight: bold;
         }
-
-        .score-good {
-            color: var(--secondary-color);
-        }
-
-        .score-medium {
-            color: var(--accent-color);
-        }
-
-        .score-poor {
-            color: var(--danger-color);
-        }
-
+        
+        .score-good { color: var(--secondary-color); }
+        .score-medium { color: var(--accent-color); }
+        .score-poor { color: var(--danger-color); }
+        
         .empty-history {
             display: flex;
             flex-direction: column;
@@ -577,18 +537,17 @@
             justify-content: center;
             gap: 15px;
             padding: 40px 20px;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-fade);
             text-align: center;
         }
-
+        
         .empty-history i {
             font-size: 2.5rem;
             opacity: 0.5;
         }
 
-        /* Footer */
         footer {
-            composes: glass;
+            grid-column: 1 / -1;
             text-align: center;
             padding: 25px;
             margin-top: 30px;
@@ -596,141 +555,143 @@
 
         footer p {
             margin-bottom: 10px;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-fade);
         }
-
+        
         .disclaimer {
             font-size: 0.9rem;
             font-style: italic;
             opacity: 0.7;
         }
 
-        /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         .animate {
             animation: fadeIn 0.8s ease forwards;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="animate">
-            <h1><i class="fas fa-universal-access"></i> Website Accessibility Checker</h1>
-            <p>Check if a website is usable and accessible to all users</p>
-        </header>
+    <header class="animate">
+        <h1>Website Accessibility Checker</h1>
+        <p>A comprehensive tool to evaluate your website's usability and accessibility for all users.</p>
+    </header>
 
-        <div class="main-content">
-            <div class="checker-section animate" style="animation-delay: 0.2s">
-                <div class="input-group">
-                    <input type="url" id="website-url" placeholder="https://example.com" required>
-                    <button id="check-btn"><i class="fas fa-search"></i> Check</button>
-                </div>
-                
-                <div class="options">
-                    <label><input type="checkbox" id="check-wcag" checked> WCAG 2.1 Compliance</label>
-                    <label><input type="checkbox" id="check-mobile" checked> Mobile Responsiveness</label>
-                    <label><input type="checkbox" id="check-performance" checked> Performance</label>
-                </div>
-                
-                <div class="result-container">
-                    <h2><i class="fas fa-file-alt"></i> Accessibility Report</h2>
-                    <div class="result-box">
-                        <div id="result-loading" class="loading">
-                            <div class="spinner"></div>
-                            <p>Analyzing website...</p>
-                        </div>
-                        <div id="result-content" style="display: none;">
-                            <div class="result-header">
-                                <h3 id="result-title">Accessibility Report</h3>
-                                <span id="result-date" class="date"></span>
-                            </div>
-                            
-                            <div class="overall-score">
-                                <div class="score-circle" id="score-circle">
-                                    <span id="score-value">0</span>%
-                                </div>
-                                <div class="score-text">
-                                    <h4 id="score-title">Overall Usability Score</h4>
-                                    <p id="score-description">This website is not accessible</p>
-                                </div>
-                            </div>
-                            
-                            <div class="detailed-results">
-                                <div class="result-category">
-                                    <h4><i class="fas fa-eye"></i> Visual Accessibility</h4>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" id="visual-progress"></div>
-                                        <span id="visual-score">0%</span>
-                                    </div>
-                                    <ul id="visual-issues" class="issue-list"></ul>
-                                </div>
-                                
-                                <div class="result-category">
-                                    <h4><i class="fas fa-mobile-alt"></i> Mobile Responsiveness</h4>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" id="mobile-progress"></div>
-                                        <span id="mobile-score">0%</span>
-                                    </div>
-                                    <ul id="mobile-issues" class="issue-list"></ul>
-                                </div>
-                                
-                                <div class="result-category">
-                                    <h4><i class="fas fa-tachometer-alt"></i> Performance</h4>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" id="performance-progress"></div>
-                                        <span id="performance-score">0%</span>
-                                    </div>
-                                    <ul id="performance-issues" class="issue-list"></ul>
-                                </div>
-                            </div>
-                            
-                            <div class="recommendations">
-                                <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
-                                <ul id="recommendations-list"></ul>
-                            </div>
-                        </div>
-                        <div id="result-error" style="display: none;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p id="error-message"></p>
-                        </div>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="checker-section glass animate" style="animation-delay: 0.2s">
+            <div class="input-group">
+                <input type="url" id="website-url" placeholder="https://example.com" required>
+                <button id="check-btn"><i class="fas fa-search"></i> Analyze Website</button>
             </div>
             
-            <div class="history-section animate" style="animation-delay: 0.4s">
-                <div class="history-header">
-                    <h2><i class="fas fa-history"></i> Analysis History</h2>
-                    <button id="clear-history"><i class="fas fa-trash-alt"></i> Clear</button>
+            <div class="options-container">
+                <label><input type="checkbox" id="check-wcag" checked> WCAG 2.1 Compliance</label>
+                <label><input type="checkbox" id="check-mobile" checked> Mobile Responsiveness</label>
+                <label><input type="checkbox" id="check-performance" checked> Performance</label>
+            </div>
+            
+            <div id="result-display" class="glass">
+                <div class="result-container" id="initial-state">
+                    <i class="fas fa-universal-access" style="font-size: 5rem; color: var(--primary-color);"></i>
+                    <h3>Start your analysis</h3>
+                    <p style="color: var(--text-fade);">Enter a URL and click 'Analyze Website' to generate a report.</p>
                 </div>
                 
-                <div class="history-controls">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="history-search" placeholder="Search history...">
+                <div class="result-container" id="loading-state" style="display: none;">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Analyzing website...</p>
                     </div>
                 </div>
                 
-                <div class="history-list" id="history-list">
-                    <div class="empty-history">
-                        <i class="fas fa-clock"></i>
-                        <p>No analysis history yet</p>
+                <div class="result-container" id="error-state" style="display: none;">
+                    <div class="error">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p id="error-message"></p>
+                    </div>
+                </div>
+
+                <div class="results-content" id="results-content">
+                    <div class="result-header">
+                        <h3 id="result-title"></h3>
+                        <span id="result-date"></span>
+                    </div>
+                    
+                    <div class="overall-score">
+                        <div class="score-circle" id="score-circle">
+                            <span id="score-value">0</span>%
+                        </div>
+                        <div class="score-text">
+                            <h4 id="score-title">Overall Accessibility Score</h4>
+                            <p id="score-description"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="detailed-results">
+                        <div class="result-category" id="visual-category" style="display: none;">
+                            <h4><i class="fas fa-eye"></i> Visual Accessibility</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="visual-progress"></div>
+                                <span id="visual-score">0%</span>
+                            </div>
+                            <ul id="visual-issues" class="issues-list"></ul>
+                        </div>
+                        
+                        <div class="result-category" id="mobile-category" style="display: none;">
+                            <h4><i class="fas fa-mobile-alt"></i> Mobile Responsiveness</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="mobile-progress"></div>
+                                <span id="mobile-score">0%</span>
+                            </div>
+                            <ul id="mobile-issues" class="issues-list"></ul>
+                        </div>
+                        
+                        <div class="result-category" id="performance-category" style="display: none;">
+                            <h4><i class="fas fa-tachometer-alt"></i> Performance</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="performance-progress"></div>
+                                <span id="performance-score">0%</span>
+                            </div>
+                            <ul id="performance-issues" class="issues-list"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendations">
+                        <h4><i class="fas fa-lightbulb"></i> Key Recommendations</h4>
+                        <ul id="recommendations-list"></ul>
                     </div>
                 </div>
             </div>
         </div>
         
-        <footer class="animate" style="animation-delay: 0.6s">
-            <p>This tool checks basic website accessibility factors. For comprehensive audits, use professional tools.</p>
-            <p class="disclaimer">Note: Results may vary based on website changes after analysis.</p>
-        </footer>
+        <div class="history-section glass animate" style="animation-delay: 0.4s">
+            <div class="history-header">
+                <h2><i class="fas fa-history"></i> Analysis History</h2>
+                <button id="clear-history"><i class="fas fa-trash-alt"></i> Clear</button>
+            </div>
+            
+            <div class="history-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="history-search" placeholder="Search history...">
+                </div>
+            </div>
+            
+            <div class="history-list" id="history-list">
+                <div class="empty-history">
+                    <i class="fas fa-clock"></i>
+                    <p>No analysis history yet.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
+
+
     <script>
-         // DOM Elements
         const websiteUrlInput = document.getElementById('website-url');
         const checkBtn = document.getElementById('check-btn');
         const checkWcag = document.getElementById('check-wcag');
@@ -739,100 +700,80 @@
         const clearHistoryBtn = document.getElementById('clear-history');
         const historySearch = document.getElementById('history-search');
         const historyList = document.getElementById('history-list');
+        const resultDisplay = document.getElementById('result-display');
+        const initialState = document.getElementById('initial-state');
+        const loadingState = document.getElementById('loading-state');
+        const errorState = document.getElementById('error-state');
+        const errorMessage = document.getElementById('error-message');
+        const resultsContent = document.getElementById('results-content');
         
-        // State
         let analysisHistory = JSON.parse(localStorage.getItem('accessibilityHistory')) || [];
         
-        // Initialize
         renderHistory();
         
-        // Event Listeners
         checkBtn.addEventListener('click', analyzeWebsite);
         clearHistoryBtn.addEventListener('click', clearHistory);
         historySearch.addEventListener('input', renderHistory);
-        websiteUrlInput.addEventListener('keypress', function(e) {
+        websiteUrlInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') analyzeWebsite();
         });
         
-        // Analyze website
         function analyzeWebsite() {
             const url = websiteUrlInput.value.trim();
             
-            // Validate URL
             if (!url) {
-                showError('Please enter a website URL');
+                showState('error', 'Please enter a website URL to start the analysis.');
                 return;
             }
             
-            // Add http:// if missing
             let fullUrl = url;
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 fullUrl = 'https://' + url;
             }
             
-            // Validate URL format
             try {
                 new URL(fullUrl);
             } catch (e) {
-                showError('Please enter a valid URL (e.g., example.com or https://example.com)');
+                showState('error', 'Please enter a valid URL (e.g., example.com or https://example.com).');
                 return;
             }
             
-            // Show loading state
-            document.getElementById('result-loading').style.display = 'flex';
-            document.getElementById('result-content').style.display = 'none';
-            document.getElementById('result-error').style.display = 'none';
+            showState('loading');
             
-            // Get selected checks
             const checks = {
                 wcag: checkWcag.checked,
                 mobile: checkMobile.checked,
                 performance: checkPerformance.checked
             };
             
-            // Simulate analysis (in real app, call API here)
             setTimeout(() => {
                 try {
-                    // Generate mock results based on checks selected
                     const result = generateMockResults(fullUrl, checks);
-                    
-                    // Add to history
                     analysisHistory.unshift(result);
                     saveHistory();
-                    
-                    // Display results
                     displayResults(result);
-                    
-                    // Update history
                     renderHistory();
                 } catch (error) {
-                    showError('Analysis failed. Please try again.');
-                    console.error(error);
+                    showState('error', 'Analysis failed. Please try again or check the URL.');
+                    console.error('Analysis error:', error);
                 }
-            }, 2000);
+            }, 2500);
         }
         
         function generateMockResults(url, checks) {
-            // Base scores (will be adjusted randomly)
             let visualScore = checks.wcag ? Math.floor(Math.random() * 40 + 60) : 0;
             let mobileScore = checks.mobile ? Math.floor(Math.random() * 40 + 60) : 0;
             let performanceScore = checks.performance ? Math.floor(Math.random() * 40 + 60) : 0;
             
-            // Calculate overall score (weighted average)
-            const activeChecks = [checks.wcag, checks.mobile, checks.performance].filter(Boolean).length;
-            const overallScore = activeChecks > 0 ? 
-                Math.round((visualScore + mobileScore + performanceScore) / activeChecks) : 0;
+            const activeChecks = [checks.wcag, checks.mobile, checks.performance].filter(Boolean);
+            const overallScore = activeChecks.length > 0 ? 
+                Math.round((visualScore + mobileScore + performanceScore) / activeChecks.length) : 0;
             
-            // Generate issues and recommendations
-            const visualIssues = checks.wcag ? generateVisualIssues(visualScore) : [];
-            const mobileIssues = checks.mobile ? generateMobileIssues(mobileScore) : [];
-            const performanceIssues = checks.performance ? generatePerformanceIssues(performanceScore) : [];
+            const visualIssues = checks.wcag ? generateIssues('visual', visualScore) : [];
+            const mobileIssues = checks.mobile ? generateIssues('mobile', mobileScore) : [];
+            const performanceIssues = checks.performance ? generateIssues('performance', performanceScore) : [];
             
-            const recommendations = generateRecommendations(
-                visualScore, 
-                mobileScore, 
-                performanceScore
-            );
+            const recommendations = generateRecommendations(visualIssues, mobileIssues, performanceIssues);
             
             return {
                 id: Date.now(),
@@ -854,105 +795,69 @@
             };
         }
         
-        function generateVisualIssues(score) {
-            const allIssues = [
-                "Low contrast text (WCAG AA failure)",
-                "Missing alt text for images",
-                "Insufficient color contrast for interactive elements",
-                "Missing form labels",
-                "Non-descriptive link text",
-                "Missing ARIA attributes",
-                "Inconsistent heading structure",
-                "Text too small (less than 16px)",
-                "Keyboard navigation issues",
-                "Poor focus visibility"
-            ];
+        function generateIssues(type, score) {
+            const issueMap = {
+                visual: [
+                    "Low contrast text (WCAG AA failure)", "Missing alt text for images",
+                    "Form inputs lack descriptive labels", "Keyboard navigation is not intuitive",
+                    "Links are not descriptive or unique", "Insufficient color contrast for buttons"
+                ],
+                mobile: [
+                    "Viewport meta tag is missing or incorrect", "Text is too small to read on mobile",
+                    "Touch targets are too close together", "Content exceeds screen width",
+                    "Pop-ups obstruct mobile interface", "Navigation is not mobile-friendly"
+                ],
+                performance: [
+                    "Images are not optimized for web", "Large JavaScript bundles are slowing down page load",
+                    "Render-blocking CSS/JS in the head section", "Inefficient server response time",
+                    "No image lazy-loading implemented", "Excessive number of HTTP requests"
+                ]
+            };
             
-            // Return more issues for lower scores
-            const issueCount = Math.max(1, Math.floor((100 - score) / 15));
-            return shuffleArray(allIssues).slice(0, issueCount);
+            const issueCount = Math.min(3, Math.max(0, Math.floor((100 - score) / 20)));
+            return shuffleArray(issueMap[type]).slice(0, issueCount);
         }
         
-        function generateMobileIssues(score) {
-            const allIssues = [
-                "Viewport not configured properly",
-                "Text too small to read without zooming",
-                "Interactive elements too close together",
-                "Horizontal scrolling required",
-                "Fixed-width viewport",
-                "Touch targets too small",
-                "Content wider than screen",
-                "Slow mobile performance",
-                "Unsupported mobile gestures",
-                "Mobile navigation issues"
-            ];
+        function generateRecommendations(visualIssues, mobileIssues, performanceIssues) {
+            const allRecommendations = new Set();
             
-            const issueCount = Math.max(1, Math.floor((100 - score) / 15));
-            return shuffleArray(allIssues).slice(0, issueCount);
-        }
-        
-        function generatePerformanceIssues(score) {
-            const allIssues = [
-                "Unoptimized images",
-                "Excessive JavaScript",
-                "No caching headers",
-                "Render-blocking resources",
-                "Unminified CSS/JS",
-                "Slow server response time",
-                "Too many HTTP requests",
-                "Large DOM size",
-                "No lazy loading",
-                "Unused CSS/JS"
-            ];
-            
-            const issueCount = Math.max(1, Math.floor((100 - score) / 15));
-            return shuffleArray(allIssues).slice(0, issueCount);
-        }
-        
-        function generateRecommendations(visualScore, mobileScore, performanceScore) {
-            const recs = [];
-            
-            if (visualScore < 70) {
-                recs.push("Increase color contrast for text and interactive elements");
-                recs.push("Add alt text to all images");
-                recs.push("Ensure proper heading hierarchy (h1-h6)");
+            if (visualIssues.length > 0) {
+                allRecommendations.add("Ensure color contrast meets WCAG AA standards.");
+                allRecommendations.add("Add descriptive `alt` attributes to all images.");
+            }
+            if (mobileIssues.length > 0) {
+                allRecommendations.add("Verify the viewport meta tag is correctly configured for responsive design.");
+                allRecommendations.add("Increase the size of touch targets and buttons.");
+            }
+            if (performanceIssues.length > 0) {
+                allRecommendations.add("Compress and lazy-load all images below the fold.");
+                allRecommendations.add("Minify and bundle CSS and JavaScript files.");
             }
             
-            if (mobileScore < 70) {
-                recs.push("Implement responsive design breakpoints");
-                recs.push("Increase touch target sizes (minimum 48x48px)");
-                recs.push("Optimize content for vertical scrolling");
+            if (allRecommendations.size === 0) {
+                allRecommendations.add("Your website appears to be highly accessible. Continue to conduct regular audits.");
+                allRecommendations.add("Consider advanced user testing to uncover additional accessibility improvements.");
             }
             
-            if (performanceScore < 70) {
-                recs.push("Compress and optimize images");
-                recs.push("Implement lazy loading for images below the fold");
-                recs.push("Minify CSS and JavaScript files");
-            }
-            
-            if (recs.length === 0) {
-                recs.push("Continue monitoring accessibility as content changes");
-                recs.push("Consider periodic accessibility audits");
-            }
-            
-            return recs.slice(0, 4); // Return max 4 recommendations
+            return [...allRecommendations].slice(0, 4);
         }
         
         function displayResults(result) {
-            // Hide loading
-            document.getElementById('result-loading').style.display = 'none';
+            showState('results');
             
-            // Set result header
-            document.getElementById('result-title').textContent = `Accessibility Report for ${new URL(result.url).hostname}`;
-            document.getElementById('result-date').textContent = result.date;
+            document.getElementById('result-title').textContent = new URL(result.url).hostname;
+            document.getElementById('result-date').textContent = `Report Date: ${result.date}`;
             
-            // Update overall score
             const overallScore = result.scores.overall;
-            document.getElementById('score-value').textContent = overallScore;
+            const scoreTitle = overallScore >= 80 ? "Excellent!" : overallScore >= 50 ? "Good" : "Needs Improvement";
+            const scoreDescription = overallScore >= 80 ? "This website is highly accessible and user-friendly." : 
+                                       overallScore >= 50 ? "This website has a moderate accessibility score. Some improvements are needed." :
+                                       "This website has significant accessibility issues that need immediate attention.";
             
-            // Update score circle color and rotation
-            const scoreCircle = document.getElementById('score-circle');
-            scoreCircle.style.background = `
+            document.getElementById('score-value').textContent = overallScore;
+            document.getElementById('score-title').textContent = `Overall Accessibility Score: ${scoreTitle}`;
+            document.getElementById('score-description').textContent = scoreDescription;
+            document.getElementById('score-circle').style.background = `
                 conic-gradient(
                     ${getScoreColor(overallScore)} ${overallScore}%,
                     rgba(255, 255, 255, 0.1) ${overallScore}%,
@@ -960,25 +865,10 @@
                 )
             `;
             
-            // Update score description
-            const scoreDescription = document.getElementById('score-description');
-            if (overallScore >= 80) {
-                scoreDescription.textContent = "This website is highly accessible";
-                scoreDescription.style.color = "var(--secondary-color)";
-            } else if (overallScore >= 50) {
-                scoreDescription.textContent = "This website is moderately accessible";
-                scoreDescription.style.color = "var(--accent-color)";
-            } else {
-                scoreDescription.textContent = "This website has significant accessibility issues";
-                scoreDescription.style.color = "var(--danger-color)";
-            }
+            updateCategoryDisplay('visual', result.scores.visual, result.issues.visual, result.checks.wcag);
+            updateCategoryDisplay('mobile', result.scores.mobile, result.issues.mobile, result.checks.mobile);
+            updateCategoryDisplay('performance', result.scores.performance, result.issues.performance, result.checks.performance);
             
-            // Update category scores
-            updateCategoryScore('visual', result.scores.visual, result.issues.visual);
-            updateCategoryScore('mobile', result.scores.mobile, result.issues.mobile);
-            updateCategoryScore('performance', result.scores.performance, result.issues.performance);
-            
-            // Update recommendations
             const recsList = document.getElementById('recommendations-list');
             recsList.innerHTML = '';
             result.recommendations.forEach(rec => {
@@ -987,25 +877,31 @@
                 recsList.appendChild(li);
             });
             
-            // Show results
-            document.getElementById('result-content').style.display = 'block';
+            document.querySelector('.results-content').classList.add('animate');
         }
         
-        function updateCategoryScore(type, score, issues) {
-            // Update progress bar
+        function updateCategoryDisplay(type, score, issues, isChecked) {
+            const categoryElement = document.getElementById(`${type}-category`);
+            if (!isChecked) {
+                categoryElement.style.display = 'none';
+                return;
+            }
+            
+            categoryElement.style.display = 'block';
+            
             document.getElementById(`${type}-progress`).style.width = `${score}%`;
             document.getElementById(`${type}-progress`).style.backgroundColor = getScoreColor(score);
             document.getElementById(`${type}-score`).textContent = `${score}%`;
             
-            // Update issues list
             const issuesList = document.getElementById(`${type}-issues`);
             issuesList.innerHTML = '';
             
             if (issues.length === 0) {
                 const li = document.createElement('li');
-                li.textContent = "No significant issues found";
+                li.textContent = "No significant issues found.";
                 li.style.color = "var(--secondary-color)";
                 li.style.fontStyle = "italic";
+                li.classList.add('no-bullet');
                 issuesList.appendChild(li);
             } else {
                 issues.forEach(issue => {
@@ -1022,35 +918,34 @@
             return "var(--danger-color)";
         }
         
+        function getScoreClass(score) {
+            if (score >= 80) return 'score-good';
+            if (score >= 50) return 'score-medium';
+            return 'score-poor';
+        }
+        
         function renderHistory() {
             const searchTerm = historySearch.value.toLowerCase();
-            
-            // Filter history
             const filteredHistory = analysisHistory.filter(item => {
                 return item.url.toLowerCase().includes(searchTerm) || 
-                       item.date.toLowerCase().includes(searchTerm) ||
-                       item.scores.overall.toString().includes(searchTerm);
+                       item.date.toLowerCase().includes(searchTerm);
             });
             
-            // Clear current list
             historyList.innerHTML = '';
             
-            // Show empty state if no history
             if (filteredHistory.length === 0) {
                 historyList.innerHTML = `
                     <div class="empty-history">
                         <i class="fas fa-clock"></i>
-                        <p>${analysisHistory.length === 0 ? 'No analysis history yet' : 'No matching results found'}</p>
+                        <p>${analysisHistory.length === 0 ? 'No analysis history yet.' : 'No matching results found.'}</p>
                     </div>
                 `;
                 return;
             }
             
-            // Add history items
             filteredHistory.forEach(item => {
                 const historyItem = document.createElement('div');
                 historyItem.className = 'history-item';
-                historyItem.dataset.id = item.id;
                 historyItem.innerHTML = `
                     <div class="history-url">${new URL(item.url).hostname}</div>
                     <div class="history-details">
@@ -1061,35 +956,22 @@
                     </div>
                 `;
                 
-                // Click handler to view analysis
                 historyItem.addEventListener('click', () => {
-                    // Update URL input
                     websiteUrlInput.value = item.url;
-                    
-                    // Update checkboxes
                     checkWcag.checked = item.checks.wcag;
                     checkMobile.checked = item.checks.mobile;
                     checkPerformance.checked = item.checks.performance;
-                    
-                    // Display results
                     displayResults(item);
-                    
-                    // Scroll to results
-                    document.querySelector('.result-container').scrollIntoView({ behavior: 'smooth' });
+                    document.querySelector('.checker-section').scrollIntoView({ behavior: 'smooth' });
                 });
                 
                 historyList.appendChild(historyItem);
             });
         }
         
-        function getScoreClass(score) {
-            if (score >= 80) return 'score-good';
-            if (score >= 50) return 'score-medium';
-            return 'score-poor';
-        }
-        
         function clearHistory() {
-            if (analysisHistory.length === 0 || confirm('Clear all analysis history?')) {
+            if (analysisHistory.length === 0) return;
+            if (confirm('Are you sure you want to clear all analysis history?')) {
                 analysisHistory = [];
                 saveHistory();
                 renderHistory();
@@ -1097,23 +979,35 @@
         }
         
         function saveHistory() {
-            // Keep only the last 50 items to prevent excessive storage
             if (analysisHistory.length > 50) {
                 analysisHistory = analysisHistory.slice(0, 50);
             }
             localStorage.setItem('accessibilityHistory', JSON.stringify(analysisHistory));
         }
         
-        function showError(message) {
-            document.getElementById('result-loading').style.display = 'none';
-            document.getElementById('result-content').style.display = 'none';
+        function showState(state, message = '') {
+            initialState.style.display = 'none';
+            loadingState.style.display = 'none';
+            errorState.style.display = 'none';
+            resultsContent.style.display = 'none';
             
-            const errorElement = document.getElementById('result-error');
-            document.getElementById('error-message').textContent = message;
-            errorElement.style.display = 'flex';
+            switch (state) {
+                case 'initial':
+                    initialState.style.display = 'flex';
+                    break;
+                case 'loading':
+                    loadingState.style.display = 'flex';
+                    break;
+                case 'error':
+                    errorMessage.textContent = message;
+                    errorState.style.display = 'flex';
+                    break;
+                case 'results':
+                    resultsContent.style.display = 'block';
+                    break;
+            }
         }
         
-        // Helper functions
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {

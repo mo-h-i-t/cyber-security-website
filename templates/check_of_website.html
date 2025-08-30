@@ -316,13 +316,12 @@
   </style>
 </head>
 <body>
-  <!-- Particles Background -->
   <div id="particles-js"></div>
   
   <div class="container">
     <h1>Website Status Checker</h1>
     
-    <p class="description">Verify if any website is online and accessible from anywhere in the world</p>
+    <p class="description">Verify if any website is authenticity and accessible from anywhere in the world</p>
     
     <div class="input-group">
       <div class="input-wrapper">
@@ -354,7 +353,6 @@
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    // Particles.js configuration
     particlesJS('particles-js', {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -421,7 +419,6 @@
       result.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Checking website availability...";
 
       try {
-        // Using a CORS proxy to avoid cross-origin issues
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
         const response = await fetch(proxyUrl);
 
@@ -449,14 +446,12 @@
     }
 
     function addToHistory(url, status) {
-      // Add to beginning of history array
       checkHistory.unshift({
         url: url,
         status: status,
         time: new Date().toLocaleTimeString()
       });
       
-      // Keep only the last 5 checks
       if (checkHistory.length > 5) {
         checkHistory.pop();
       }

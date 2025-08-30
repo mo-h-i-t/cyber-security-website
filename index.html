@@ -280,7 +280,7 @@
             margin-bottom: 60px;
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--light);
+            color: var(--secondary);
             position: relative;
             display: inline-block;
             left: 50%;
@@ -681,7 +681,6 @@
     </style>
 </head>
 <body>
-    <!-- Particles Background -->
     <div id="particles-js"></div>
     
     <nav class="navbar">
@@ -707,16 +706,15 @@
         </div>
         <p> Hello Friend, This website is made only to help you.It is made to investigate the websiteand apps authenticity.
         <div class="hero-buttons">
-            <a href="#features" class="btn pulse">Explore Capabilities</a>
+            <a href="#features" class="btn pulse">Explore </a>
             <a href="./templates/home.html" class="btn btn-secondary">Launch Tools</a>
             <a href="./templates/how-make's.html" class="btn pulse">Learn About</a>
         </div>
     </section>
     
-    <!-- Stats Section -->
     <div class="stats">
         <div class="stat-item">
-            <div class="stat-number">99.8%</div>
+            <div class="stat-number">90.0%</div>
             <div class="stat-label">Accuracy Rate</div>
         </div>
         <div class="stat-item">
@@ -724,35 +722,31 @@
             <div class="stat-label">Monitoring</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">10k+</div>
+            <div class="stat-number">__</div>
             <div class="stat-label">Checks Daily</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">0.2s</div>
+            <div class="stat-number">1.0M to 2.0M</div>
             <div class="stat-label">Average Response</div>
         </div>
     </div>
     
     <section id="features" class="features">
-        <h2 class="section-title">Advanced Capabilities</h2>
+        <h2 class="section-title">Our Key Features</h2>
         <div class="feature-grid">
             <div class="feature animate">
-                <h3><i class="fas fa-search-plus"></i> Comprehensive Analysis</h3>
-                <p>Deep scanning technology for websites, applications, images, and videos. Multi-layered inspection for authenticity verification and threat detection.</p>
+                <h3><i class="fas fa-search-plus"></i> Analysis</h3>
+                <p> Scanning technology for websites, applications, images, and videos.<br> check authenticity verification.</p>
             </div>
             <div class="feature animate delay-1">
-                <h3><i class="fas fa-brain"></i> AI-Powered Detection</h3>
-                <p>Advanced neural networks identify AI-generated content with 99.2% accuracy. Analyze media fingerprints and metadata for manipulation signs.</p>
+                <h3><i class="fas fa-brain"></i> AI - Detection</h3>
+                <p>Networks identify AI-generated content with 90% accuracy. Analyze media fingerprints and metadata for manipulation signs.</p>
             </div>
             <div class="feature animate delay-2">
                 <h3><i class="fas fa-bolt"></i> Performance Optimization</h3>
                 <p>Comprehensive website efficiency analysis with actionable insights. Load time optimization, security headers check, and vulnerability assessment.</p>
             </div>
             <div class="feature animate delay-3">
-                <h3><i class="fas fa-code-branch"></i> Advanced Technology Stack</h3>
-                <p>Built with Python AI algorithms, React frontend, Node.js backend, and cutting-edge cybersecurity libraries for maximum protection.</p>
-            </div>
-            <div class="feature animate delay-4">
                 <h3><i class="fas fa-code-branch"></i> Important Note </h3>
                 <p> Desired result not be Accurate in first time Checking(AI detector)
             </div>
@@ -762,7 +756,6 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Particles.js configuration
         document.addEventListener('DOMContentLoaded', function() {
             particlesJS('particles-js', {
                 particles: {
@@ -798,11 +791,10 @@
                 retina_detect: true
             });
             
-            // Typewriter effect
             const texts = [
-                "Cyber Security Solutions",
-                "AI-Powered Threat Detection",
-                "Protecting Your Digital Presence"
+            "Hello Friend, I am Mohit Singh.",
+            "Welcome to cyber security website,",
+            "Know the website's authenticity."
             ];
 
             let count = 0;
@@ -831,7 +823,6 @@
             
             type();
             
-            // Animation on load
             const animatedElements = document.querySelectorAll('.animate');
             
             animatedElements.forEach(element => {
@@ -844,7 +835,6 @@
                 });
             }, 100);
             
-            // Mobile menu toggle
             const menuToggle = document.querySelector('.menu-toggle');
             const navLinks = document.querySelector('.nav-links');
             
@@ -852,7 +842,6 @@
                 this.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 
-                // Toggle body scroll when menu is open
                 if (navLinks.classList.contains('active')) {
                     document.body.style.overflow = 'hidden';
                 } else {
@@ -860,7 +849,6 @@
                 }
             });
             
-            // Close menu when clicking on a link
             const navItems = document.querySelectorAll('.nav-links a');
             navItems.forEach(item => {
                 item.addEventListener('click', function() {
@@ -870,7 +858,6 @@
                 });
             });
             
-            // Parallax effect on scroll
             window.addEventListener('scroll', function() {
                 const scrolled = window.pageYOffset;
                 const hero = document.querySelector('.hero');
@@ -885,7 +872,6 @@
                 }
             });
             
-            // Add animation to stats on scroll into view
             const observerOptions = {
                 threshold: 0.5,
                 rootMargin: '0px 0px -50px 0px'
