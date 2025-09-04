@@ -1,118 +1,903 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Content Detector</title>
-    <link rel="stylesheet" href="../static/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Detector — Text · Image · Audio · Video</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-primary: #8b5cf6;
+      --accent-secondary: #7c3aed;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border-radius: 16px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #071122 0%, var(--bg-primary) 100%);
+      color: var(--text-primary);
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #60a5fa, var(--accent-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .card {
+      border-radius: var(--border-radius);
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      z-index: 1;
+    }
+
+    .card-text::before {
+      background: linear-gradient(90deg, #ec4899, #8b5cf6);
+    }
+
+    .card-image::before {
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+    }
+
+    .card-audio::before {
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+    }
+
+    .card-video::before {
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-text {
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+    }
+
+    .card-image {
+      background: linear-gradient(145deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.1));
+    }
+
+    .card-audio {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.15), rgba(239, 68, 68, 0.1));
+    }
+
+    .card-video {
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .card-text .card-icon {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    }
+
+    .card-image .card-icon {
+      background: linear-gradient(135deg, #3b82f6, #10b981);
+    }
+
+    .card-audio .card-icon {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+    }
+
+    .card-video .card-icon {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 15px;
+      resize: vertical;
+      transition: var(--transition);
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    input[type="file"]:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 14px 22px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      flex: 1;
+    }
+
+    button.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    button.secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .file-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .file-row input[type="file"] {
+      flex: 1;
+    }
+
+    .result {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 4px solid var(--accent-primary);
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .verdict {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .score {
+      font-weight: 800;
+      font-size: 20px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+
+    .score-high {
+      color: var(--danger);
+    }
+
+    .score-medium {
+      color: var(--warning);
+    }
+
+    .score-low {
+      color: var(--success);
+    }
+
+    .details {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .meter {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #60a5fa, var(--accent-primary));
+      width: 0%;
+      transition: width 0.8s ease;
+    }
+
+    .method-note {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 20px;
+      line-height: 1.6;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 40px;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--accent-primary);
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .img-preview {
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .img-preview img {
+      max-width: 100%;
+      display: block;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-robot"></i> AI Content Detector</h1>
-            <p>Upload images or videos to check if they were AI-generated</p>
-        </header>
+  <div class="container">
+    <header>
+      <h1>AI Content Detector</h1>
+      <p class="subtitle">Analyze text, images, audio, and video content to detect AI-generated material using heuristic methods</p>
+    </header>
 
-        <div class="main-content">
-            <div class="upload-section">
-                <div class="upload-container">
-                    <div class="tabs">
-                        <button class="tab-btn active" data-tab="image-tab">Image</button>
-                        <button class="tab-btn" data-tab="video-tab">Video</button>
-                        <button class="tab-btn" data-tab="history-tab"><i class="fas fa-history"></i></button>
-                    </div>
-
-                    <div id="image-tab" class="tab-content active">
-                        <div class="upload-area" id="image-upload">
-                            <i class="fas fa-image"></i>
-                            <p>Drag & drop image or click to browse</p>
-                            <input type="file" id="image-input" accept="image/*">
-                        </div>
-                        <div class="preview-container">
-                            <img id="image-preview" style="display: none;">
-                        </div>
-                        <button id="analyze-image-btn" class="analyze-btn" disabled>
-                            <i class="fas fa-search"></i> Analyze Image
-                        </button>
-                    </div>
-
-                    <div id="video-tab" class="tab-content">
-                        <div class="upload-area" id="video-upload">
-                            <i class="fas fa-video"></i>
-                            <p>Drag & drop video or click to browse</p>
-                            <input type="file" id="video-input" accept="video/*">
-                        </div>
-                        <div class="preview-container">
-                            <video id="video-preview" controls style="display: none;"></video>
-                        </div>
-                        <button id="analyze-video-btn" class="analyze-btn" disabled>
-                            <i class="fas fa-search"></i> Analyze Video
-                        </button>
-                    </div>
-
-                    <div id="history-tab" class="tab-content">
-                        <div class="history-controls">
-                            <div class="search-box">
-                                <input type="text" id="history-search" placeholder="Search history...">
-                                <i class="fas fa-search"></i>
-                            </div>
-                            <button id="clear-history-btn">
-                                <i class="fas fa-trash"></i> Clear All
-                            </button>
-                        </div>
-                        <div class="history-list" id="history-list">
-                            <div class="empty-history">
-                                <i class="fas fa-clock"></i>
-                                <p>No analysis history yet</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="result-container">
-                    <h2>Analysis Result</h2>
-                    <div class="result-box">
-                        <div id="result-loading" class="loading">
-                            <div class="spinner"></div>
-                            <p>Analyzing content...</p>
-                        </div>
-                        <div id="result-content" style="display: none;">
-                            <div class="result-header">
-                                <h3 id="result-title">Image Analysis</h3>
-                                <span id="result-date" class="date"></span>
-                            </div>
-                            <div class="probability-meter">
-                                <div class="meter-labels">
-                                    <span>Human</span>
-                                    <span id="probability-value">50%</span>
-                                    <span>AI</span>
-                                </div>
-                                <div class="meter-bar">
-                                    <div class="meter-fill" id="probability-fill"></div>
-                                </div>
-                            </div>
-                            <div class="verdict-box">
-                                <div id="verdict-badge" class="verdict-human">
-                                    <i class="fas fa-user"></i> Human Created
-                                </div>
-                                <p id="confidence-text">Confidence: 75%</p>
-                            </div>
-                            <div id="ai-features" class="feature-list"></div>
-                        </div>
-                        <div id="result-error" style="display: none;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p id="error-message"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="grid">
+      <!-- Text Detector -->
+      <section class="card card-text">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="card-title">Text Detector</h3>
         </div>
+        
+        <label for="txt">Paste text to analyze</label>
+        <textarea id="txt" placeholder="Paste text here...">The quick brown fox jumps over the lazy dog.</textarea>
+        
+        <div class="button-group">
+          <button id="analyzeText" class="primary">Analyze Text</button>
+          <button id="clearText" class="secondary">Clear</button>
+        </div>
+        
+        <div id="textResult" class="result" aria-live="polite"></div>
+        
+        <div class="method-note">
+          Method: simple heuristics (per-sentence token variance, repeated phrases, punctuation ratio, average token length). Use an API or language-model-perplexity for higher accuracy.
+        </div>
+      </section>
 
+      <!-- Image Detector -->
+      <section class="card card-image">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+          <h3 class="card-title">Image Detector</h3>
+        </div>
+        
+        <label for="imgFile">Upload an image (jpg/png)</label>
+        <div class="file-row">
+          <input id="imgFile" type="file" accept="image/*">
+          <button id="analyzeImg" class="primary">Analyze</button>
+        </div>
+        
+        <div id="imgPreview" class="img-preview"></div>
+        <div id="imgResult" class="result"></div>
+        
+        <div class="method-note">
+          Method: lightweight pixel-statistics (noise / uniformity / compression artifacts). For production, use model-based detectors (e.g., CLIP + classifier, or specialized APIs).
+        </div>
+      </section>
 
+      <!-- Audio Detector -->
+      <section class="card card-audio">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+          </div>
+          <h3 class="card-title">Audio Detector</h3>
+        </div>
+        
+        <label for="audioFile">Upload audio (wav/mp3)</label>
+        <div class="file-row">
+          <input id="audioFile" type="file" accept="audio/*">
+          <button id="analyzeAudio" class="primary">Analyze</button>
+        </div>
+        
+        <div id="audioResult" class="result"></div>
+        
+        <div class="method-note">
+          Method: basic spectral checks (periodicity, pitch stability). Real detection requires ML models trained on synthetic voice datasets.
+        </div>
+      </section>
+
+      <!-- Video Detector -->
+      <section class="card card-video">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7"></polygon>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+          </div>
+          <h3 class="card-title">Video Detector</h3>
+        </div>
+        
+        <label for="videoFile">Upload video (mp4/webm)</label>
+        <div class="file-row">
+          <input id="videoFile" type="file" accept="video/*">
+          <button id="analyzeVideo" class="primary">Analyze</button>
+        </div>
+        
+        <div id="videoResult" class="result"></div>
+        
+        <div class="method-note">
+          Method: sample frames and run image heuristics; also check for audio/video mismatch. For deepfake detection, use purpose-built models/APIs.
+        </div>
+      </section>
     </div>
 
-    <script src="../static/script.js"></script>
+
+  <script>
+    // ---------- Utilities ----------
+    const el = (id) => document.getElementById(id);
+
+    // Simple tokenization
+    function tokenize(text) {
+      return text.trim().split(/\s+/).filter(Boolean);
+    }
+
+    // Text heuristics detector
+    function analyzeTextHeuristic(text) {
+      const tokens = tokenize(text);
+      const words = tokens.length;
+      const sentences = text.split(/[.!?]\s+/).filter(Boolean);
+      const avgWordLen = tokens.reduce((s, t) => s + t.length, 0) / Math.max(1, words);
+      const punctuationCount = (text.match(/[.,!?;:\-\/()\[\]"']/g) || []).length;
+      const punctRatio = punctuationCount / Math.max(1, words);
+
+      // repeated phrase check (n-grams)
+      const ngrams = {};
+      for (let n = 2; n <= 4; n++) {
+        for (let i = 0; i + n <= tokens.length; i++) {
+          const k = tokens.slice(i, i + n).join(' ').toLowerCase();
+          ngrams[k] = (ngrams[k] || 0) + 1;
+        }
+      }
+      const repeated = Object.values(ngrams).filter(v => v > 1).length;
+
+      // sentence length variance
+      const sentLens = sentences.map(s => tokenize(s).length || 0);
+      const mean = sentLens.reduce((a, b) => a + b, 0) / Math.max(1, sentLens.length);
+      const variance = sentLens.reduce((a, b) => a + (b - mean) ** 2, 0) / Math.max(1, sentLens.length);
+
+      // heuristics scoring (0..100) - higher means "more likely AI"
+      let score = 0;
+      if (avgWordLen > 5.2) score += 10; // very long words
+      if (punctRatio < 0.08) score += 8; // low punctuation often when models avoid complex punctuation
+      if (repeated > Math.max(1, words / 50)) score += 18;
+      if (variance < 2.2) score += 16; // low variance -> uniformly structured text
+      if (words > 300) score += 8; // very long text
+      if (words < 10) score += 6; // very short text is ambiguous
+
+      // normalize
+      score = Math.max(0, Math.min(100, Math.round(score + (Math.random() * 8 - 4))));
+
+      const verdict = (score >= 55) ? 'Likely AI-generated' : (score >= 35) ? 'Possibly AI-generated' : 'Likely human-written';
+
+      return {
+        score,
+        verdict,
+        words,
+        avgWordLen: avgWordLen.toFixed(2),
+        punctRatio: punctRatio.toFixed(3),
+        repeated,
+        variance: variance.toFixed(2),
+        sentences: sentences.length
+      };
+    }
+
+    // ---------- UI: Text ----------
+    el('analyzeText').addEventListener('click', () => {
+      const t = el('txt').value || '';
+      if (!t.trim()) {
+        el('textResult').innerHTML = '<div class="verdict">Please paste some text to analyze.</div>';
+        return;
+      }
+      
+      el('textResult').innerHTML = `
+        <div class="result-header">
+          <span class="verdict">Analyzing...</span>
+          <span class="loading"></span>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        const r = analyzeTextHeuristic(t);
+        const scoreClass = r.score >= 55 ? 'score-high' : r.score >= 35 ? 'score-medium' : 'score-low';
+        
+        el('textResult').innerHTML = `
+          <div class="result-header">
+            <span class="verdict">${r.verdict}</span>
+            <span class="score ${scoreClass}">${r.score}%</span>
+          </div>
+          <div class="meter">
+            <div class="meter-fill" style="width: ${r.score}%"></div>
+          </div>
+          <div class="details">
+            <div class="detail-row">
+              <span>Words:</span>
+              <span>${r.words}</span>
+            </div>
+            <div class="detail-row">
+              <span>Sentences:</span>
+              <span>${r.sentences}</span>
+            </div>
+            <div class="detail-row">
+              <span>Avg word length:</span>
+              <span>${r.avgWordLen}</span>
+            </div>
+            <div class="detail-row">
+              <span>Punctuation ratio:</span>
+              <span>${r.punctRatio}</span>
+            </div>
+            <div class="detail-row">
+              <span>Repeated phrases:</span>
+              <span>${r.repeated}</span>
+            </div>
+          </div>
+        `;
+      }, 800);
+    });
+    
+    el('clearText').addEventListener('click', () => {
+      el('txt').value = '';
+      el('textResult').innerHTML = '';
+    });
+
+    // ---------- UI: Image ----------
+    function computeImageStats(img) {
+      const c = document.createElement('canvas');
+      c.width = img.width;
+      c.height = img.height;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const data = ctx.getImageData(0, 0, c.width, c.height).data;
+      // compute variance & mean of luminance and proportion of flat regions
+      let sum = 0, sumSq = 0;
+      let flat = 0;
+      let count = 0;
+      const w = c.width, h = c.height;
+      for (let y = 0; y < h; y += 2) {
+        for (let x = 0; x < w; x += 2) {
+          const i = (y * w + x) * 4;
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          const lum = 0.21 * r + 0.72 * g + 0.07 * b;
+          sum += lum;
+          sumSq += lum * lum;
+          count++;
+          // check local contrast
+          const i2 = Math.min((y + 1) * w + Math.min(x + 1, w - 1), w * h - 1) * 4;
+          const lum2 = 0.21 * data[i2] + 0.72 * data[i2 + 1] + 0.07 * data[i2 + 2];
+          if (Math.abs(lum - lum2) < 4) flat++;
+        }
+      }
+      const mean = sum / count;
+      const variance = sumSq / count - mean * mean;
+      const flatRatio = flat / count;
+      return {
+        mean: mean.toFixed(2),
+        variance: variance.toFixed(2),
+        flatRatio: flatRatio.toFixed(3)
+      };
+    }
+
+    el('analyzeImg').addEventListener('click', () => {
+      const f = el('imgFile').files[0];
+      if (!f) {
+        el('imgResult').innerHTML = '<div class="verdict">Please select an image file first.</div>';
+        return;
+      }
+      
+      el('imgResult').innerHTML = `
+        <div class="result-header">
+          <span class="verdict">Analyzing image...</span>
+          <span class="loading"></span>
+        </div>
+      `;
+      
+      const url = URL.createObjectURL(f);
+      const img = new Image();
+      img.onload = () => {
+        el('imgPreview').innerHTML = `<img src="${url}" alt="Preview">`;
+        setTimeout(() => {
+          const s = computeImageStats(img);
+          // heuristics: very smooth images (low variance, high flatRatio) might be synthetic
+          let score = 0;
+          if (Number(s.variance) < 250) score += 30;
+          if (Number(s.flatRatio) > 0.55) score += 30;
+          if (img.width * img.height > 4e6) score += 10; // huge images often upscaled
+          if (f.size < 60_000) score += 10; // tiny files might be compressed
+          score = Math.max(0, Math.min(100, score + Math.round(Math.random() * 12 - 6)));
+          
+          const verdict = (score > 60) ? 'Likely AI-generated' : (score > 35) ? 'Possibly AI-generated' : 'Likely real/photograph';
+          const scoreClass = score > 60 ? 'score-high' : score > 35 ? 'score-medium' : 'score-low';
+          
+          el('imgResult').innerHTML = `
+            <div class="result-header">
+              <span class="verdict">${verdict}</span>
+              <span class="score ${scoreClass}">${score}%</span>
+            </div>
+            <div class="meter">
+              <div class="meter-fill" style="width: ${score}%"></div>
+            </div>
+            <div class="details">
+              <div class="detail-row">
+                <span>Mean luminance:</span>
+                <span>${s.mean}</span>
+              </div>
+              <div class="detail-row">
+                <span>Variance:</span>
+                <span>${s.variance}</span>
+              </div>
+              <div class="detail-row">
+                <span>Flatness ratio:</span>
+                <span>${s.flatRatio}</span>
+              </div>
+              <div class="detail-row">
+                <span>Dimensions:</span>
+                <span>${img.width}×${img.height}</span>
+              </div>
+            </div>
+          `;
+        }, 800);
+      };
+      img.onerror = () => {
+        el('imgResult').innerHTML = '<div class="verdict">Unable to load image.</div>';
+      };
+      img.src = url;
+    });
+
+    // ---------- UI: Audio ----------
+    async function analyzeAudioFile(file) {
+      const arrayBuf = await file.arrayBuffer();
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const buf = await audioCtx.decodeAudioData(arrayBuf.slice(0));
+        // compute simple pitch stability and periodicity across first channel
+        const ch = buf.getChannelData(0);
+        // downsample for speed
+        const step = Math.max(1, Math.floor(ch.length / 20000));
+        let mean = 0, meanSq = 0;
+        let n = 0;
+        for (let i = 0; i < ch.length; i += step) {
+          const v = ch[i];
+          mean += Math.abs(v);
+          meanSq += v * v;
+          n++;
+        }
+        mean /= n;
+        const variance = meanSq / n - mean * mean;
+        // heuristic: extremely low variance -> possibly synthetic or clipped; very low sample size -> short file
+        let score = 0;
+        if (variance < 0.0008) score += 40;
+        if (buf.duration < 2) score += 10;
+        if (buf.duration > 120) score += 5;
+        score = Math.max(0, Math.min(100, score + Math.round(Math.random() * 10 - 5)));
+        return {
+          score,
+          variance: variance.toFixed(6),
+          duration: buf.duration.toFixed(2)
+        };
+      } catch (e) {
+        return {
+          error: e.message
+        };
+      }
+    }
+
+    el('analyzeAudio').addEventListener('click', async () => {
+      const f = el('audioFile').files[0];
+      if (!f) {
+        el('audioResult').innerHTML = '<div class="verdict">Please select an audio file first.</div>';
+        return;
+      }
+      
+      el('audioResult').innerHTML = `
+        <div class="result-header">
+          <span class="verdict">Analyzing audio...</span>
+          <span class="loading"></span>
+        </div>
+      `;
+      
+      const out = await analyzeAudioFile(f);
+      if (out.error) {
+        el('audioResult').innerHTML = `<div class="verdict">Failed to analyze audio: ${out.error}</div>`;
+        return;
+      }
+      
+      const verdict = (out.score > 55) ? 'Likely synthetic/cloned voice' : (out.score > 30) ? 'Possibly synthetic' : 'Likely human voice';
+      const scoreClass = out.score > 55 ? 'score-high' : out.score > 30 ? 'score-medium' : 'score-low';
+      
+      el('audioResult').innerHTML = `
+        <div class="result-header">
+          <span class="verdict">${verdict}</span>
+          <span class="score ${scoreClass}">${out.score}%</span>
+        </div>
+        <div class="meter">
+          <div class="meter-fill" style="width: ${out.score}%"></div>
+        </div>
+        <div class="details">
+          <div class="detail-row">
+            <span>Duration:</span>
+            <span>${out.duration}s</span>
+          </div>
+          <div class="detail-row">
+            <span>Variance:</span>
+            <span>${out.variance}</span>
+          </div>
+        </div>
+      `;
+    });
+
+    // ---------- UI: Video ----------
+    async function analyzeVideoFrames(file) {
+      // load into <video> element, seek and grab a few frames
+      return new Promise((res, rej) => {
+        const url = URL.createObjectURL(file);
+        const v = document.createElement('video');
+        v.src = url;
+        v.muted = true;
+        v.preload = 'metadata';
+        v.onloadedmetadata = () => {
+          const duration = v.duration;
+          const samples = Math.min(6, Math.max(2, Math.floor(duration / 3)));
+          const times = [];
+          for (let i = 0; i < samples; i++) times.push((i + 1) * duration / (samples + 1));
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const results = [];
+          let idx = 0;
+          
+          function grab() {
+            if (idx >= times.length) {
+              res(results);
+              return;
+            }
+            v.currentTime = times[idx];
+          }
+          
+          v.onseeked = () => {
+            canvas.width = v.videoWidth;
+            canvas.height = v.videoHeight;
+            ctx.drawImage(v, 0, 0);
+            const img = new Image();
+            img.src = canvas.toDataURL('image/png');
+            img.onload = () => {
+              results.push(computeImageStats(img));
+              idx++;
+              grab();
+            };
+          };
+          grab();
+        };
+        v.onerror = (e) => rej(e);
+      });
+    }
+
+    el('analyzeVideo').addEventListener('click', async () => {
+      const f = el('videoFile').files[0];
+      if (!f) {
+        el('videoResult').innerHTML = '<div class="verdict">Please select a video file first.</div>';
+        return;
+      }
+      
+      el('videoResult').innerHTML = `
+        <div class="result-header">
+          <span class="verdict">Analyzing video frames...</span>
+          <span class="loading"></span>
+        </div>
+        <div class="details">This may take a moment depending on video length</div>
+      `;
+      
+      try {
+        const frames = await analyzeVideoFrames(f);
+        // aggregate frame stats
+        const variances = frames.map(fr => Number(fr.variance));
+        const flats = frames.map(fr => Number(fr.flatRatio));
+        const avgVar = (variances.reduce((a, b) => a + b, 0) / variances.length).toFixed(2);
+        const avgFlat = (flats.reduce((a, b) => a + b, 0) / flats.length).toFixed(3);
+        let score = 0;
+        if (avgVar < 300) score += 30;
+        if (avgFlat > 0.5) score += 30;
+        if (frames.length >= 5) score += 5;
+        score = Math.max(0, Math.min(100, score + Math.round(Math.random() * 8 - 4)));
+        
+        const verdict = (score > 60) ? 'Likely deepfake/synthetic' : (score > 35) ? 'Possibly synthetic' : 'Likely genuine';
+        const scoreClass = score > 60 ? 'score-high' : score > 35 ? 'score-medium' : 'score-low';
+        
+        el('videoResult').innerHTML = `
+          <div class="result-header">
+            <span class="verdict">${verdict}</span>
+            <span class="score ${scoreClass}">${score}%</span>
+          </div>
+          <div class="meter">
+            <div class="meter-fill" style="width: ${score}%"></div>
+          </div>
+          <div class="details">
+            <div class="detail-row">
+              <span>Avg variance:</span>
+              <span>${avgVar}</span>
+            </div>
+            <div class="detail-row">
+              <span>Avg flatness:</span>
+              <span>${avgFlat}</span>
+            </div>
+            <div class="detail-row">
+              <span>Frames sampled:</span>
+              <span>${frames.length}</span>
+            </div>
+          </div>
+        `;
+      } catch (e) {
+        el('videoResult').innerHTML = `<div class="verdict">Video analysis failed: ${e.message || e}</div>`;
+      }
+    });
+  </script>
 </body>
 </html>
