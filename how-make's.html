@@ -639,109 +639,109 @@
     
     
 
-    <script src=".//static/how-make's.js">
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const animatedElements = document.querySelectorAll('.animate');
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             const animatedElements = document.querySelectorAll('.animate');
             
-        //     animatedElements.forEach(element => {
-        //         element.style.opacity = '0';
-        //     });
+             animatedElements.forEach(element => {
+                 element.style.opacity = '0';
+             });
             
-        //     setTimeout(() => {
-        //         animatedElements.forEach(element => {
-        //             element.style.opacity = '1';
-        //         });
-        //     }, 100);
+             setTimeout(() => {
+                 animatedElements.forEach(element => {
+                     element.style.opacity = '1';
+                 });
+             }, 100);
             
-        //     const observerOptions = {
-        //         root: null,
-        //         rootMargin: '0px',
-        //         threshold: 0.1
-        //     };
-            
-        //     const observer = new IntersectionObserver((entries) => {
-        //         entries.forEach(entry => {
-        //             if (entry.isIntersecting) {
-        //                 entry.target.style.animationPlayState = 'running';
-        //                 observer.unobserve(entry.target);
-        //             }
-        //         });
-        //     }, observerOptions);
-            
-        //     animatedElements.forEach(el => {
-        //         observer.observe(el);
-        //     });
+             const observerOptions = {
+                 root: null,
+                 rootMargin: '0px',
+                 threshold: 0.1
+             };
+           
+             const observer = new IntersectionObserver((entries) => {
+                 entries.forEach(entry => {
+                     if (entry.isIntersecting) {
+                         entry.target.style.animationPlayState = 'running';
+                         observer.unobserve(entry.target);
+                     }
+                 });
+             }, observerOptions);
+          
+             animatedElements.forEach(el => {
+                 observer.observe(el);
+             });
 
-        //     createParticles();
-        //     createPulseCircles();
-        // });
+             createParticles();
+             createPulseCircles();
+         });
 
-        // function createParticles() {
-        //     const container = document.getElementById('particles-container');
-        //     const particleCount = 50;
+         function createParticles() {
+             const container = document.getElementById('particles-container');
+             const particleCount = 50;
             
-        //     for (let i = 0; i < particleCount; i++) {
-        //         const particle = document.createElement('div');
-        //         particle.classList.add('particle');
+             for (let i = 0; i < particleCount; i++) {
+                 const particle = document.createElement('div');
+                 particle.classList.add('particle');
                 
-        //         const size = Math.random() * 5 + 2;
-        //         const posX = Math.random() * 100;
-        //         const posY = Math.random() * 100;
-        //         const delay = Math.random() * 15;
-        //         const duration = 15 + Math.random() * 10;
+                 const size = Math.random() * 5 + 2;
+                 const posX = Math.random() * 100;
+                 const posY = Math.random() * 100;
+                 const delay = Math.random() * 15;
+                 const duration = 15 + Math.random() * 10;
                 
-        //         particle.style.width = `${size}px`;
-        //         particle.style.height = `${size}px`;
-        //         particle.style.left = `${posX}vw`;
-        //         particle.style.top = `${posY}vh`;
-        //         particle.style.animationDelay = `${delay}s`;
-        //         particle.style.animationDuration = `${duration}s`;
-                
-        //         const colors = [
-        //             'rgba(67, 97, 238, 0.6)', 
-        //             'rgba(6, 214, 160, 0.6)', 
-        //             'rgba(255, 209, 102, 0.6)',
-        //             'rgba(239, 71, 111, 0.6)',
-        //             'rgba(255, 255, 255, 0.6)'
-        //         ];
-        //         particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-        //         container.appendChild(particle);
-        //     }
-        // }
+                 particle.style.width = `${size}px`;
+                 particle.style.height = `${size}px`;
+                 particle.style.left = `${posX}vw`;
+                 particle.style.top = `${posY}vh`;
+                 particle.style.animationDelay = `${delay}s`;
+                 particle.style.animationDuration = `${duration}s`;
+              
+                 const colors = [
+                     'rgba(67, 97, 238, 0.6)', 
+                     'rgba(6, 214, 160, 0.6)', 
+                     'rgba(255, 209, 102, 0.6)',
+                     'rgba(239, 71, 111, 0.6)',
+                     'rgba(255, 255, 255, 0.6)'
+                 ];
+                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+              
+                 container.appendChild(particle);
+             }
+         }
 
-        // function createPulseCircles() {
-        //     const container = document.getElementById('particles-container');
-        //     const circleCount = 5;
+         function createPulseCircles() {
+             const container = document.getElementById('particles-container');
+             const circleCount = 5;
             
-        //     for (let i = 0; i < circleCount; i++) {
-        //         const circle = document.createElement('div');
-        //         circle.classList.add('pulse-circle');
+             for (let i = 0; i < circleCount; i++) {
+                 const circle = document.createElement('div');
+                 circle.classList.add('pulse-circle');
                 
-        //         const size = Math.random() * 300 + 100;
-        //         const posX = Math.random() * 100;
-        //         const posY = Math.random() * 100;
-        //         const delay = Math.random() * 5;
-        //         const duration = 8 + Math.random() * 4;
+                 const size = Math.random() * 300 + 100;
+                 const posX = Math.random() * 100;
+                 const posY = Math.random() * 100;
+                 const delay = Math.random() * 5;
+                 const duration = 8 + Math.random() * 4;
                 
-        //         circle.style.width = `${size}px`;
-        //         circle.style.height = `${size}px`;
-        //         circle.style.left = `${posX}vw`;
-        //         circle.style.top = `${posY}vh`;
-        //         circle.style.animationDelay = `${delay}s`;
-        //         circle.style.animationDuration = `${duration}s`;
+                 circle.style.width = `${size}px`;
+                 circle.style.height = `${size}px`;
+                 circle.style.left = `${posX}vw`;
+                 circle.style.top = `${posY}vh`;
+                 circle.style.animationDelay = `${delay}s`;
+                 circle.style.animationDuration = `${duration}s`;
+              
+                 const colors = [
+                     'rgba(67, 97, 238, 0.1)', 
+                     'rgba(6, 214, 160, 0.1)', 
+                     'rgba(255, 209, 102, 0.1)',
+                     'rgba(239, 71, 111, 0.1)'
+                 ];
+                 circle.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
                 
-        //         const colors = [
-        //             'rgba(67, 97, 238, 0.1)', 
-        //             'rgba(6, 214, 160, 0.1)', 
-        //             'rgba(255, 209, 102, 0.1)',
-        //             'rgba(239, 71, 111, 0.1)'
-        //         ];
-        //         circle.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
-                
-        //         container.appendChild(circle);
-        //     }
-        // }
+            container.appendChild(circle);
+            }
+        }
     </script>
 </body>
 </html>
