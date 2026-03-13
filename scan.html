@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard Pro - Advanced Security Scanner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #0066ff;
+            --danger: #ff3366;
+            --warning: #ffaa00;
+            --dark: #0a0f1e;
+            --darker: #050814;
+            --light: #f0f4ff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .cyber-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(var(--glass-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        .glow-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at center, var(--primary) 0%, transparent 70%);
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: orbFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Navigation */
+        .cyber-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 15, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 1rem 5%;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark) !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .nav-button:hover::after {
+            display: none;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 100px auto 2rem;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .cyber-hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            position: relative;
+        }
+
+        .cyber-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), #aa00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3)); }
+            50% { filter: drop-shadow(0 0 40px rgba(0, 102, 255, 0.5)); }
+        }
+
+        .cyber-subtitle {
+            font-size: 1.2rem;
+            color: #8892b0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #8892b0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Device Scanner */
+        .scanner-section {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        /* Device Grid */
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .device-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .device-option:hover::before {
+            left: 100%;
+        }
+
+        .device-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .device-option.active {
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .device-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .device-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .device-specs {
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+
+        /* Scan Interface */
+        .scan-interface {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Scan Progress */
+        .scan-progress-container {
+            margin-top: 2rem;
+        }
+
+        .scan-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #8892b0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .results-table th {
+            text-align: left;
+            padding: 1rem;
+            color: #8892b0;
+            font-weight: 500;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .results-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .threat-level {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .threat-critical { background: rgba(255, 51, 102, 0.2); color: var(--danger); }
+        .threat-high { background: rgba(255, 170, 0, 0.2); color: var(--warning); }
+        .threat-medium { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .threat-low { background: rgba(0, 255, 136, 0.2); color: var(--primary); }
+
+        /* Security Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #8892b0;
+            line-height: 1.6;
+        }
+
+        /* Threat Map */
+        .threat-map {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .map-point {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .threat-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .threat-dot.critical { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
+        .threat-dot.high { background: var(--warning); box-shadow: 0 0 10px var(--warning); }
+        .threat-dot.low { background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cyber-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .stats-bar {
+                gap: 1rem;
+            }
+            
+            .stat-item {
+                padding: 1rem;
+                min-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-background">
+        <div class="cyber-grid"></div>
+        <div class="glow-orb" style="top: 20%; left: 20%;"></div>
+        <div class="glow-orb" style="top: 60%; right: 20%; background: radial-gradient(circle at center, var(--secondary) 0%, transparent 70%);"></div>
+    </div>
+
+    <nav class="cyber-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🛡️</span>
+                CyberGuard Pro
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#scanner">Scanner</a>
+                <a href="#features">Features</a>
+                <a href="#threat-map">Threat Map</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact">Contact</a>
+                <a href="#" class="nav-button">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <div class="cyber-hero">
+            <h1 class="cyber-title">Advanced Threat Detection & Protection</h1>
+            <p class="cyber-subtitle">Real-time virus scanning and cybersecurity protection for all your devices with military-grade encryption</p>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">1.2B+</div>
+                <div class="stat-label">Files Scanned</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Threat Detection</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Protection</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Countries</div>
+            </div>
+        </div>
+
+        <!-- Main Scanner Section -->
+        <div class="scanner-section" id="scanner">
+            <h2 class="section-title">
+                <span>⚡</span> Select Device to Scan
+            </h2>
+            
+            <div class="device-grid">
+                <div class="device-option active" onclick="selectDevice('phone')">
+                    <div class="device-icon">📱</div>
+                    <div class="device-name">Smartphone</div>
+                    <div class="device-specs">Android • iOS</div>
+                </div>
+                <div class="device-option" onclick="selectDevice('laptop')">
+                    <div class="device-icon">💻</div>
+                    <div class="device-name">Laptop</div>
+                    <div class="device-specs">Windows • macOS • Linux</div>
+                </div>
+                <div class="device-option" onclick="selectDevice('tablet')">
+                    <div class="device-icon">📲</div>
+                    <div class="device-name">Tablet</div>
+                    <div class="device-specs">iPad • Android Tab</div>
+                </div>
+                <div class="device-option" onclick="selectDevice('network')">
+                    <div class="device-icon">🌐</div>
+                    <div class="device-name">Network</div>
+                    <div class="device-specs">Full Network Scan</div>
+                </div>
+            </div>
+
+            <!-- Scan Interface -->
+            <div class="scan-interface">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📂</div>
+                    <h3>Drop files here or click to upload</h3>
+                    <p style="color: #8892b0; margin: 1rem 0;">Supports: .exe .apk .dmg .zip .doc .pdf and more</p>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Select Files</button>
+                </div>
+
+                <!-- Quick Scan Options -->
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button class="upload-btn" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);" onclick="quickScan('quick')">
+                        ⚡ Quick Scan
+                    </button>
+                    <button class="upload-btn" style="background: transparent; border: 1px solid var(--secondary); color: var(--secondary);" onclick="quickScan('full')">
+                        🔍 Full System Scan
+                    </button>
+                    <button class="upload-btn" style="background: transparent; border: 1px solid var(--warning); color: var(--warning);" onclick="quickScan('custom')">
+                        ⚙️ Custom Scan
+                    </button>
+                </div>
+
+                <!-- Scan Progress -->
+                <div class="scan-progress-container" id="scanProgress" style="display: none;">
+                    <div class="scan-info">
+                        <span>Scanning: <span id="scanFileName">system files</span></span>
+                        <span><span id="scanPercentage">0</span>%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 1rem; color: #8892b0;">
+                        <span>Threats detected: <span id="threatsDetected">0</span></span>
+                        <span>Speed: <span id="scanSpeed">0</span> MB/s</span>
+                        <span>Time remaining: <span id="timeRemaining">calculating...</span></span>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div id="results" style="display: none;">
+                    <h3 style="margin: 2rem 0 1rem;">Scan Results</h3>
+                    <table class="results-table" id="resultsTable">
+                        <!-- Results will be populated here -->
+                    </table>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="upload-btn" onclick="quarantineThreats()">🛡️ Quarantine Threats</button>
+                        <button class="upload-btn" style="background: transparent; border: 1px solid var(--glass-border);" onclick="exportReport()">📊 Export Report</button>
+                        <button class="upload-btn" style="background: transparent; border: 1px solid var(--glass-border);" onclick="newScan()">🔄 New Scan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Threat Map -->
+        <div class="threat-map" id="threat-map">
+            <h2 class="section-title">
+                <span>🌍</span> Live Threat Intelligence Map
+            </h2>
+            <div class="map-grid" id="threatMap">
+                <!-- Dynamic threat points will be added here -->
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid" id="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-title">AI-Powered Detection</div>
+                <div class="feature-description">Machine learning algorithms detect zero-day threats before they can harm your system</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Real-Time Protection</div>
+                <div class="feature-description">Continuous monitoring with instant threat response and automatic quarantine</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Military-Grade Encryption</div>
+                <div class="feature-description">AES-256 encryption for all your sensitive data and communications</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <div class="feature-title">Gaming Mode</div>
+                <div class="feature-description">Optimize performance while gaming without compromising security</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDevice = 'phone';
+        let scanInterval;
+        let threatCount = 0;
+
+        // Device selection
+        function selectDevice(device) {
+            currentDevice = device;
+            document.querySelectorAll('.device-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update upload zone based on device
+            const uploadZone = document.querySelector('.upload-zone h3');
+            if (device === 'phone') {
+                uploadZone.textContent = 'Drop apps or files to scan your phone';
+            } else if (device === 'laptop') {
+                uploadZone.textContent = 'Drop files or folders to scan your laptop';
+            } else if (device === 'tablet') {
+                uploadZone.textContent = 'Drop files to scan your tablet';
+            } else {
+                uploadZone.textContent = 'Drop any files for network-wide scanning';
+            }
+        }
+
+        // File input handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                startScan(e.target.files);
+            }
+        });
+
+        // Quick scan options
+        function quickScan(type) {
+            const fileCount = type === 'quick' ? 250 : type === 'full' ? 1500 : 500;
+            simulateScan(fileCount);
+        }
+
+        // Start scan simulation
+        function startScan(files) {
+            const fileArray = Array.from(files);
+            simulateScan(fileArray.length, fileArray);
+        }
+
+        function simulateScan(itemCount, files = null) {
+            // Hide upload zone, show progress
+            document.querySelector('.upload-zone').style.display = 'none';
+            document.querySelectorAll('.upload-btn').forEach(btn => {
+                if (btn.textContent.includes('Select') || btn.textContent.includes('Quick')) {
+                    btn.style.display = 'none';
+                }
+            });
+            document.getElementById('scanProgress').style.display = 'block';
+            
+            let progress = 0;
+            const totalSize = Math.floor(Math.random() * 1000) + 500; // Random total size in MB
+            let scannedSize = 0;
+            threatCount = Math.floor(Math.random() * 5); // Random threats 0-4
+            
+            scanInterval = setInterval(() => {
+                progress += Math.random() * 3;
+                scannedSize += (totalSize / 100) * 3;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(scanInterval);
+                    setTimeout(() => showResults(files, threatCount), 500);
+                }
+                
+                // Update progress
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('scanPercentage').textContent = Math.floor(progress);
+                document.getElementById('threatsDetected').textContent = threatCount;
+                document.getElementById('scanSpeed').textContent = (scannedSize / 10).toFixed(1);
+                
+                const remainingMB = totalSize - scannedSize;
+                const timeRemaining = remainingMB > 0 ? (remainingMB / 10).toFixed(0) : 0;
+                document.getElementById('timeRemaining').textContent = timeRemaining + 's';
+                
+                // Update scanning file name
+                if (files && files.length > 0) {
+                    const randomFile = files[Math.floor(Math.random() * files.length)].name;
+                    document.getElementById('scanFileName').textContent = randomFile;
+                } else {
+                    const files = ['system.dll', 'config.sys', 'user.dat', 'app.exe', 'document.pdf'];
+                    document.getElementById('scanFileName').textContent = files[Math.floor(Math.random() * files.length)];
+                }
+            }, 200);
+        }
+
+        // Show results
+        function showResults(files, threatCount) {
+            document.getElementById('scanProgress').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            const resultsTable = document.getElementById('resultsTable');
+            let tableHTML = `
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Threat Level</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+            
+            // Generate sample results
+            const fileTypes = ['.exe', '.dll', '.pdf', '.doc', '.apk', '.dmg', '.zip'];
+            const threatLevels = ['Critical', 'High', 'Medium', 'Low', 'Safe'];
+            const threatColors = ['critical', 'high', 'medium', 'low', 'low'];
+            
+            for (let i = 0; i < 10; i++) {
+                const randomThreat = Math.random();
+                let threat = 'Safe';
+                let threatClass = 'low';
+                
+                if (randomThreat < 0.1) {
+                    threat = 'Critical';
+                    threatClass = 'critical';
+                } else if (randomThreat < 0.25) {
+                    threat = 'High';
+                    threatClass = 'high';
+                } else if (randomThreat < 0.45) {
+                    threat = 'Medium';
+                    threatClass = 'medium';
+                } else if (randomThreat < 0.7) {
+                    threat = 'Low';
+                    threatClass = 'low';
+                }
+                
+                tableHTML += `
+                    <tr>
+                        <td>${i === 0 && threatCount > 0 ? '⚠️ ' : ''}file_${i + 1}${fileTypes[Math.floor(Math.random() * fileTypes.length)]}</td>
+                        <td>${['Application', 'Document', 'System', 'Archive'][Math.floor(Math.random() * 4)]}</td>
+                        <td>${Math.floor(Math.random() * 50) + 1} MB</td>
+                        <td><span class="threat-level threat-${threatClass}">${threat}</span></td>
+                        <td>${threat === 'Safe' ? '✅ Clean' : '🔴 Infected'}</td>
+                    </tr>
+                `;
+            }
+            
+            tableHTML += '</tbody>';
+            resultsTable.innerHTML = tableHTML;
+        }
+
+        // Action functions
+        function quarantineThreats() {
+            alert('🛡️ Threats have been quarantined successfully!');
+            document.querySelectorAll('.threat-level').forEach(el => {
+                if (el.textContent !== 'Safe') {
+                    el.textContent = 'Safe';
+                    el.className = 'threat-level threat-low';
+                }
+            });
+        }
+
+        function exportReport() {
+            alert('📊 Report exported to PDF');
+        }
+
+        function newScan() {
+            location.reload();
+        }
+
+        // Drag and drop
+        const uploadZone = document.getElementById('uploadZone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.remove('dragover');
+            }, false);
+        });
+
+        uploadZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                startScan(files);
+            }
+        }
+
+        // Live threat map simulation
+        function updateThreatMap() {
+            const threatMap = document.getElementById('threatMap');
+            const locations = [
+                { city: 'New York', threats: Math.floor(Math.random() * 50) + 10, level: 'critical' },
+                { city: 'London', threats: Math.floor(Math.random() * 30) + 5, level: 'high' },
+                { city: 'Tokyo', threats: Math.floor(Math.random() * 20) + 3, level: 'medium' },
+                { city: 'Singapore', threats: Math.floor(Math.random() * 15) + 2, level: 'low' },
+                { city: 'Sydney', threats: Math.floor(Math.random() * 10) + 1, level: 'low' },
+                { city: 'Moscow', threats: Math.floor(Math.random() * 40) + 8, level: 'high' },
+                { city: 'Beijing', threats: Math.floor(Math.random() * 35) + 7, level: 'medium' },
+                { city: 'Mumbai', threats: Math.floor(Math.random() * 25) + 4, level: 'low' }
+            ];
+            
+            let mapHTML = '';
+            locations.forEach(loc => {
+                mapHTML += `
+                    <div class="map-point">
+                        <div class="threat-dot ${loc.level}"></div>
+                        <div>
+                            <div style="font-weight: 600;">${loc.city}</div>
+                            <div style="color: #8892b0; font-size: 0.85rem;">${loc.threats} active threats</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            threatMap.innerHTML = mapHTML;
+        }
+
+        // Update threat map every 10 seconds
+        updateThreatMap();
+        setInterval(updateThreatMap, 10000);
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
