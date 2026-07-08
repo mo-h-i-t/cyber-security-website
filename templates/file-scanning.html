@@ -4,35 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecureScan - Multi-Format File Checker</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="../static/file-scanning.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="scanner-card">
-        <h1>Smart File Scanner</h1>
-        <p>Upload files to analyze their extensions and check execution risk levels.</p>
+    <div class="cyber-background">
+        <div class="cyber-grid"></div>
+        <div class="glow-orb" style="top: 20%; left: 20%;"></div>
+        <div class="glow-orb" style="top: 60%; right: 20%; background: radial-gradient(circle at center, var(--secondary) 0%, transparent 70%);"></div>
+    </div>
 
-        <div class="drop-zone" id="drop-zone">
-            <span class="icon">📁</span>
-            <div class="drop-title">Drag & drop any file here</div>
-            <div class="drop-subtitle">Supports .exe, .zip, .pdf, .png, .js, etc.</div>
-            <input type="file" id="file-input">
+    <nav class="cyber-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🛡️</span>
+                CyberGuard Pro
+            </a>
+            <div class="nav-links">
+                <a href="../templates/home-page.html">Home</a>
+                <a href="../templates/web-checking.html">Scanner</a>
+
+                <a href="../templates/about.html" class="nav-button">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <div class="cyber-hero">
+            <h1 class="cyber-title">Advanced Threat Detection & Protection</h1>
+            <p class="cyber-subtitle">Real-time virus scanning and cybersecurity protection for all your devices with military-grade encryption</p>
         </div>
 
-        <div class="status-container" id="status-container">
-            <div id="status-text">Analyzing file...</div>
-            <div id="file-details"></div>
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number">1.2B+</div>
+                <div class="stat-label">Files Scanned</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Threat Detection</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Protection</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Countries</div>
+            </div>
+        </div>
+
+        <!-- Main Scanner Section -->
+        <div class="scanner-section" id="scanner">
+            <h2 class="section-title">
+                <span>⚡</span> Select Device to Scan
+            </h2>
             
-            <div class="progress-bar-container" id="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
+            <div class="device-grid">
+                <div class="device-option active" onclick="selectDevice('phone')">
+                    <div class="device-icon">📱</div>
+                    <div class="device-name">Smartphone</div>
+                    <div class="device-specs">Android • iOS</div>
+                </div>
+                <div class="device-option" onclick="selectDevice('laptop')">
+                    <div class="device-icon">💻</div>
+                    <div class="device-name">Laptop</div>
+                    <div class="device-specs">Windows • macOS • Linux</div>
+                </div>
+                <div class="device-option" onclick="selectDevice('tablet')">
+                    <div class="device-icon">📲</div>
+                    <div class="device-name">Tablet</div>
+                    <div class="device-specs">iPad • Android Tab</div>
+                </div>
+                <div class="device-option" onclick="selectDevice('network')">
+                    <div class="device-icon">🌐</div>
+                    <div class="device-name">Network</div>
+                    <div class="device-specs">Full Network Scan</div>
+                </div>
             </div>
 
-            <div id="result-container"></div>
-            <button class="btn" id="reset-btn">Scan Another File</button>
+            <!-- Scan Interface -->
+            <div class="scan-interface">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📂</div>
+                    <h3>Drop files here or click to upload</h3>
+                    <p style="color: #8892b0; margin: 1rem 0;">Supports: .exe .apk .dmg .zip .doc .pdf and more</p>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Select Files</button>
+                </div>
+
+                <!-- Quick Scan Options -->
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button class="upload-btn" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);" onclick="quickScan('quick')">
+                        ⚡ Quick Scan
+                    </button>
+                    <button class="upload-btn" style="background: transparent; border: 1px solid var(--secondary); color: var(--secondary);" onclick="quickScan('full')">
+                        🔍 Full System Scan
+                    </button>
+                    <button class="upload-btn" style="background: transparent; border: 1px solid var(--warning); color: var(--warning);" onclick="quickScan('custom')">
+                        ⚙️ Custom Scan
+                    </button>
+                </div>
+
+                <!-- Scan Progress -->
+                <div class="scan-progress-container" id="scanProgress" style="display: none;">
+                    <div class="scan-info">
+                        <span>Scanning: <span id="scanFileName">system files</span></span>
+                        <span><span id="scanPercentage">0</span>%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 1rem; color: #8892b0;">
+                        <span>Threats detected: <span id="threatsDetected">0</span></span>
+                        <span>Speed: <span id="scanSpeed">0</span> MB/s</span>
+                        <span>Time remaining: <span id="timeRemaining">calculating...</span></span>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div id="results" style="display: none;">
+                    <h3 style="margin: 2rem 0 1rem;">Scan Results</h3>
+                    <table class="results-table" id="resultsTable">
+                        <!-- Results will be populated here -->
+                    </table>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="upload-btn" onclick="quarantineThreats()">🛡️ Quarantine Threats</button>
+                        <button class="upload-btn" style="background: transparent; border: 1px solid var(--glass-border);" onclick="exportReport()">📊 Export Report</button>
+                        <button class="upload-btn" style="background: transparent; border: 1px solid var(--glass-border);" onclick="newScan()">🔄 New Scan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Threat Map -->
+        <div class="threat-map" id="threat-map">
+            <h2 class="section-title">
+                <span>🌍</span> Live Threat Intelligence Map
+            </h2>
+            <div class="map-grid" id="threatMap">
+                <!-- Dynamic threat points will be added here -->
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid" id="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-title">AI-Powered Detection</div>
+                <div class="feature-description">Machine learning algorithms detect zero-day threats before they can harm your system</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Real-Time Protection</div>
+                <div class="feature-description">Continuous monitoring with instant threat response and automatic quarantine</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Military-Grade Encryption</div>
+                <div class="feature-description">AES-256 encryption for all your sensitive data and communications</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <div class="feature-title">Gaming Mode</div>
+                <div class="feature-description">Optimize performance while gaming without compromising security</div>
+            </div>
         </div>
     </div>
-</div>
 
 <script src="/static/file-scanning.js"></script>
 </body>
