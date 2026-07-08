@@ -2,29 +2,29 @@
 particlesJS('particles-js', {
     "particles": {
         "number": {
-            "value": 80,
+            "value": 150,
             "density": {
                 "enable": true,
-                "value_area": 800
+                "value_area": 500
             }
         },
         "color": {
-            "value": "#00b7ff"
+            "value": "#0fca34"
         },
         "shape": {
             "type": "circle",
             "stroke": {
                 "width": 0,
-                "color": "#000000"
+                "color": "#000000 , #00b7ff , #00b7ff,#ffffff"
             }
         },
         "opacity": {
-            "value": 0.5,
+            "value": 0.8,
             "random": true,
             "anim": {
                 "enable": true,
-                "speed": 1,
-                "opacity_min": 0.1,
+                "speed": 5,
+                "opacity_min": 0.5,
                 "sync": false
             }
         },
@@ -33,21 +33,21 @@ particlesJS('particles-js', {
             "random": true,
             "anim": {
                 "enable": true,
-                "speed": 3,
-                "size_min": 0.1,
+                "speed": 5,
+                "size_min": 0.3,
                 "sync": false
             }
         },
         "line_linked": {
             "enable": true,
-            "distance": 150,
-            "color": "#00b7ff",
+            "distance": 200,
+            "color": "#00b7ff",  
             "opacity": 0.4,
             "width": 1
         },
         "move": {
             "enable": true,
-            "speed": 3,
+            "speed": 5,
             "direction": "none",
             "random": true,
             "straight": false,
@@ -75,7 +75,7 @@ particlesJS('particles-js', {
         },
         "modes": {
             "grab": {
-                "distance": 140,
+                "distance": 100,
                 "line_linked": {
                     "opacity": 1
                 }
@@ -87,3 +87,4 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
+

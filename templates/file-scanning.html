@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureScan - Multi-Format File Checker</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="scanner-card">
+        <h1>Smart File Scanner</h1>
+        <p>Upload files to analyze their extensions and check execution risk levels.</p>
+
+        <div class="drop-zone" id="drop-zone">
+            <span class="icon">📁</span>
+            <div class="drop-title">Drag & drop any file here</div>
+            <div class="drop-subtitle">Supports .exe, .zip, .pdf, .png, .js, etc.</div>
+            <input type="file" id="file-input">
+        </div>
+
+        <div class="status-container" id="status-container">
+            <div id="status-text">Analyzing file...</div>
+            <div id="file-details"></div>
+            
+            <div class="progress-bar-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <div id="result-container"></div>
+            <button class="btn" id="reset-btn">Scan Another File</button>
+        </div>
+    </div>
+</div>
+
+<script src="/static/file-scanning.js"></script>
+</body>
+</html>
